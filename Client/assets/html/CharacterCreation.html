@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+          input, select {
+            margin: 12px;
+            height: 50px;
+            width: 100%;
+          }
+        </style>
+    </head>
+    <body>
+        <div id="input-form">
+            <input type="text" name="name" placeholder="Character Name">
+            <br>
+            <select name="class">
+              <option value="">-- Select Class --</option>
+              <option value="Gladiator">Gladiator</option>
+              <!-- 
+                Sub Classes:
+                Praetorian (Melee, Tank)
+                Spellblade (Melee, Physical Damage, Magic Damage)
+                Champion (Melee, Physical Damage)
+              -->
+
+              <option value="Godsworn">Godsworn</option>
+              <!-- Sub Classes:
+                Forsaken (Melee, Tank)
+                Mender (Melee, Healer)
+                Ascended (Melee, Physical/Magic Damage)
+              -->
+
+              <option value="Operative">Operative</option>
+              <!-- Sub Classes:
+                Marksman (Ranged, Physical Damage)
+                Agent (Melee, Physical Damage, Poison)
+                Physician (Melee, Healer)
+              -->
+
+              <option value="Lightbringer">Lightbringer</option>
+              <!-- Sub Classes:
+                Lifebringer (Ranged, Healer)
+                Elementalist (Ranged, Magic Damage)
+                Battlemage (Melee, Physical Damage, Magic Damage)
+              -->
+
+              <option value="Harbinger">Harbinger</option>
+              <!-- Sub Classes:
+                Corruptor (Ranged, Magic Damage)
+                Undying (Ranged, Healer)
+                Siphoner (Ranged, Magic Damage)
+              -->
+
+            </select>
+            <br>
+            <select name="race">
+              <option value="">-- Select Race --</option>
+              <option value="Human">Human</option>
+              <option value="Dwarf">Dwarf</option>
+              <option value="Elf">Elf</option>
+              <option value="Gnome">Gnome</option>
+            </select>
+            <br>
+            <select name="faction">
+              <option value="">-- Select Faction --</option>
+              <option value="Crown Sentinels">Crown Sentinels</option>
+              <!-- Loyal to the king, and the realm, the Crown Sentinels watch over the lands and deliver the lords' will, keeping the peace and protecting the denizens from harm -->
+              <option value="Twilight Accord">Twilight Accord</option>
+              <!-- Having been granted visions of the future from forces unknown, the Twilight Accord seperated from the Kingdom, believing that the King will lead the land to death and destruction -->
+              <option value="Reaver Legion">Reaver Legion</option>
+              <!-- A neutral mercenary company, the Reaver Legion fights for the highest bidder, and seeks only one thing; wealth beyond measure -->
+            </select>
+        </div>
+    </body>
+</html>
