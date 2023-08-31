@@ -1,20 +1,27 @@
-import "./lib/phaser.min.js";
+import Phaser from 'phaser';
 
-import Boot from "./scenes/boot.js";
-import UI from "./scenes/ui.js";
-import Game from "./scenes/game.js";
-import Title from "./scenes/title.js";
+import Preload from './scenes/preload.js';
+import Menu from './scenes/menu.js';
+import Game from './scenes/game.js';
+import OfflineGame from './scenes/offline_game.js';
+import UI from './scenes/ui.js';
 
-var config = {
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+console.log(width, height);
+
+const config = {
   type: Phaser.AUTO,
-  parent: "phaser-game",
+  parent: 'evereign',
   width: 1920,
   height: 1080,
   scene: [
-    Boot,
+    Preload,
+    Menu,
+    OfflineGame,
     Game,
-    UI,
-    Title
+    UI
   ],
   physics: {
     default: 'arcade',
@@ -28,10 +35,8 @@ var config = {
   dom: {
     createContainer: true
   },
-
   pixelArt: true,
   roundPixels: true
-
 };
 
-var game = new Phaser.Game(config);
+new Phaser.Game(config);

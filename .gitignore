@@ -2,4 +2,8 @@
 * text=auto
 
 /Client/node_modules
-/Server/node_modules
+/AuthenticationServer/node_modules
+/GameServer/node_modules
+/Data
+
+*.rnd
