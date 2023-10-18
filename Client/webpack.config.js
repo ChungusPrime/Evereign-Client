@@ -1,14 +1,27 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
 module.exports = {
 
     mode: "development",
 
-    watch: true,
+    watch: false,
 
-    entry: "./assets/js/main.js",
+    devtool: "source-map",
+
+    entry: {
+        evereign: './src/main.js'
+    },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+          title: 'Evereign',
+        }),
+    ],
 
     output: {
-        filename: "bundle.js",
-        path: __dirname
+        filename: '[name].[contenthash].js',
+        path: path.resolve(__dirname, 'dist'),
     }
 
 }

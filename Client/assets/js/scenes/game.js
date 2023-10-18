@@ -70,7 +70,7 @@ export default class Game extends Phaser.Scene {
 
       //self.NpcManager.setup(npcs);
 
-      this.connected = true;
+      self.connected = true;
 
     });
 
