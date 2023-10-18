@@ -16,12 +16,15 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
           title: 'Evereign',
+          filename: 'index.html',
+          template: 'src/index.html'
         }),
     ],
 
     output: {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
+        clean: true
     }
 
 }
