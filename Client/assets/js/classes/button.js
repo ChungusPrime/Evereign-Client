@@ -1,6 +1,8 @@
+import Phaser from 'phaser';
+
 export default class Button extends Phaser.GameObjects.Container {
   
-  constructor(scene, x, y, key, hoverKey, text, targetCallback) {
+  constructor ( scene, x, y, key, hoverKey, text, targetCallback) {
     super(scene, x, y);
 
     this.scene = scene;
@@ -12,20 +14,18 @@ export default class Button extends Phaser.GameObjects.Container {
     this.targetCallback = targetCallback;
 
     this.button = scene.add.image(0, 0, "button1").setOrigin(0.5);
-
     this.button.setInteractive();
-
     this.button.setScale(1.25);
 
     this.buttonText = scene.add.text(0, 0, this.text, {
       fontSize: "24px",
       fill: "#fff",
+      fontFamily: 'Mooli'
     });
 
     Phaser.Display.Align.In.Center(this.buttonText, this.button);
 
     this.add(this.button);
-
     this.add(this.buttonText);
 
     this.button.on("pointerdown", () => {

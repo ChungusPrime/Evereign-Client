@@ -13,7 +13,7 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
 
     this.step = 1;
 
-    this.attribute_points = 10;
+    this.attribute_points = 5;
 
     this.character = {
       name: "",
@@ -154,7 +154,7 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
     // Create Attribute Assignment Screen;
     this.AttributeAssignmentScreen = sc.add.container(0, 0).setSize(sc.scale.width, sc.scale.height).setVisible(false);
 
-    this.points_remaining_text = new Text(sc, sc.scale.width * 0.5, sc.scale.height * 0.15, "10 Points Remaining", 32);
+    this.points_remaining_text = new Text(sc, sc.scale.width * 0.5, sc.scale.height * 0.15, "5 Points Remaining", 32);
 
     this.AttributeAssignmentScreen.add([
       new Text(sc, sc.scale.width * 0.5, sc.scale.height * 0.1, "Assign Attributes", 64),
@@ -275,7 +275,7 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
   }
 
   DecreaseAttribute ( val, text ) {
-    if ( this.attribute_points == 10 ) return;
+    if ( this.attribute_points == 5 ) return;
     this.attribute_points++;
     this.character[val]--;
     text.setText(`${val}: ${this.character[val]}`);

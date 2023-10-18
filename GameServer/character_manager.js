@@ -1,10 +1,10 @@
 class CharacterManager {
 
-  constructor ( db ) {
+  constructor (db) {
     this.db = db;
   }
 
-  async Create ( Character, UserID ) {
+  async CreateCharacter ( Character, UserID ) {
     console.log(Character, UserID);
 
     const Name = Character.name;
@@ -26,30 +26,48 @@ class CharacterManager {
 
     const PlayerID = UserID;
 
-    const Area = "";
-    const X = 0;
-    const Y = 0;
+    let Area = "";
+    let X = 0;
+    let Y = 0;
 
     if ( Faction == "Kingdom" ) {
-      //Area = "F01";
-      //X = 1;
-      //Y = 1;
+      Area = "E1";
+      X = 329;
+      Y = 3135;
     } else if ( Faction == "Accord" ) {
-      //Area = "H13";
+      //Area = "B7";
       //X = 1;
       //Y = 1;
-    } else if ( Faction == "Reaver Legion" ) {
-      //Area = "N6";
+    } else if ( Faction == "Reaver" ) {
+      //Area = "B2";
       //X = 1;
       //Y = 1;
     }
 
-    /*const result = await this.db.promise().query(`INSERT INTO characters VALUES x = ?, y = ?, area = ? WHERE id = ?`, [ 
-      player.x, player.y, player.area, player.id
+    const result = await this.db.promise().query(`
+      INSERT INTO characters 
+      VALUES(
+        name = ?,
+        class = ?,
+        area = ?,
+        x = ?,
+        y = ?,
+        level = ?,
+        player_id = ?,
+        faction = ?
+      )`, [ 
+      Name,
+      Class,
+      Area,
+      X,
+      Y,
+      Level,
+      UserID,
+      Faction
     ]);
     
-    console.log(result);*/
-
+    console.log(result);
+    return result;
   }
 
   async GetAccountList( id ) {
@@ -57,12 +75,12 @@ class CharacterManager {
     return characters;
   }
 
-  async Get ( id, socket ) {
+  async GetCharacter ( id ) {
 
-    const [characterResult] = await this.db.promise().query(`SELECT * FROM characters WHERE characters.id = ? LIMIT 1`, [id]);
-    const character = characterResult[0];
+    const [result] = await this.db.promise().query(`SELECT * FROM characters WHERE characters.id = ? LIMIT 1`, [id]);
+    const Character = result[0];
 
-    const [inventory] = await this.db.promise().query(`SELECT id, item_id, slot FROM character_inventory WHERE character_inventory.character_id = ?`, [id]);
+    /*const [inventory] = await this.db.promise().query(`SELECT id, item_id, slot FROM character_inventory WHERE character_inventory.character_id = ?`, [id]);
     character.inventory = inventory;
 
     const [equipment] = await this.db.promise().query(`SELECT id, item_id, slot FROM character_equipment WHERE character_equipment.character_id = ?`, [id]);
@@ -75,10 +93,9 @@ class CharacterManager {
     character.abilities = abilities;
 
     const [quickbar] = await this.db.promise().query(`SELECT id, object_id, slot, type FROM character_quickbar WHERE character_quickbar.character_id = ?`, [id]);
-    character.quickbar = quickbar;
+    character.quickbar = quickbar;*/
 
-    character.socket = socket;
-    return character;
+    return Character;
   }
 
   async Update ( player ) {

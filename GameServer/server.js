@@ -1,156 +1,167 @@
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const db = require('./database');
-const cors = require('cors');
+const { Worker, isMainThread, parentPort, workerData } = require("node:worker_threads");
 
-const io = require('socket.io')(server, {
+console.log("Game server booting...");
+
+const express = require("express");
+const app = express();
+
+const server = require("http").Server(app);
+const db = require("./database");
+const cors = require("cors");
+
+const io = require("socket.io")(server, {
   cors: {
-      origin: "*",
-      methods: ["GET", "POST"]
-  }
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
 });
 
-const ListenPort = parseInt(process.argv[2]);
-
-app.options('*', cors())
+app.options("*", cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(__dirname));
 
-const CharacterManager = require('./character_manager');
-const ItemManager = require('./item_manager');
-//const NpcManager = require('./npc_manager');
+const Port = parseInt(process.argv[2]);
 
 const MaxPlayers = 100;
-const Players = {};
-const Characters = {};
 
-let CM;
-let IM;
+let Character = require("./Character");
+let CharacterManager = require("./character_manager");
+let ItemManager = require("./item_manager");
+let NPCManager = require("./npc_manager");
 
 let ItemData;
+let NPCData;
+let GameRegions = {};
 
 (async () => {
-  try {
 
-    CM = new CharacterManager(db);
-    IM = new ItemManager(db);
+  console.log("Initialising game world...");
 
-    // Retrieve data using the ItemManager and store it in the variable
-    ItemData = await IM.GetItemData();
+  CharacterManager = new CharacterManager(db);
 
-    // Now you can start the server
-    server.listen(ListenPort, () => {
-      console.log(`Server is running on port ${ListenPort}`);
+  ItemManager = new ItemManager(db);
+  ItemData = await ItemManager.GetItemData();
+
+  NPCManager = new NPCManager(db);
+  NPCData = await NPCManager.GetNPCData();
+
+  [/*"A1", "A2", "A3", "A4", "A5", "B1", "B2", "B3", "B4", "B5", 
+     "C1", "C2", "C3", "C4", "C5", "D1", "D2", "D3", "D4", "D5",
+  */"E1", /*"E2", "E3", "E4", "E5"*/].forEach( ( region ) => {
+
+    GameRegions[region] = { 
+      region: region,
+      players: {},
+      npcs: [],
+      nodes: {},
+      events: {},
+      land: {},
+      worker: null
+    };
+  
+    NPCData.forEach( ( npc ) => {
+      if ( npc.area == region ) GameRegions[region].npcs.push(npc);
     });
+  
+    console.table(GameRegions[region].npcs);
+  
+    const worker = new Worker("./GameRegion.js", { workerData: GameRegions[region] });
+  
+    worker.on("message", (message) => {
+      if ( message.type == "REGION_DATA_TICK" ) {
+        GameRegions[message.region] = message.data;
+        io.to(message.region).emit('REGION_DATA_TICK', message.data);
+      }
+    })
+    .on("error", (error) => { console.error(error) })
+    .on("exit", (code) => { console.log(`Worker exited with code ${code}.`) });
 
-  } catch (err) {
-    console.error('Error retrieving data:', err);
-  }
+    GameRegions[region].worker = worker;
+  });
+
+  server.listen(Port, () => {
+    console.log(GameRegions);
+    console.log(`Server is running on port ${Port}`);
+  });
+
 })();
 
-app.get('/test', async (req, res) => {
+function SendMessageToWorker ( key, data ) {
+  //SendMessageToWorker("F1", { action: "ADD_PLAYER", message: "Hello, connect me to F1 please" } );
+  //SendMessageToWorker("F1", { action: "REMOVE_PLAYER", message: "Hello, remove me from F1 please" } );
+  GameRegions[key].worker.postMessage(data);
+}
+
+setInterval(() => {
+  //console.clear();
+  //console.table(GameRegions);
+}, 1000 / 10);
+
+app.get("/test", async (req, res) => {
   console.log(ItemData, CM, IM);
   res.header("Access-Control-Allow-Origin", "*");
   res.json({ CM: CM, IM: IM, ItemData: ItemData });
 });
 
-app.post('/status', async (req, res) => {
-  console.log(req.body.id);
+app.post("/status", async (req, res) => {
+  console.log(`Getting character list for account ${req.body.id}`);
   res.header("Access-Control-Allow-Origin", "*");
-  const characters = CM.GetAccountList(req.body.id);
-  res.json({ characters: characters, success: true, players: Object.values(Players).length });
+  const characters = await CharacterManager.GetAccountList(req.body.id);
+  console.log(characters);
+  res.json({
+    characters: characters,
+    success: true
+  });
 });
 
-app.post('/create_character', async (req, res) => {
+app.post("/create_character", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   console.log(req.body);
-  const character = CM.Create(req.body.Character, req.body.UserID);
+  const character = CharacterManager.CreateCharacter(req.body.Character, req.body.UserID);
   res.json({ success: true, character: character });
 });
 
+// Listen for socket.io connections
+io.on( "connection", async ( socket ) => {
 
+  console.log(`socket ${socket.id} requesting to load character ${socket.request._query["character"]}`);
 
-const { ArcadePhysics } = require('arcade-physics');
+  let Character = await CharacterManager.GetCharacter(socket.request._query["character"]);
+  Character.socket = socket.id;
+  console.table(Character);
 
-const config = {
-  width: 800,
-  height: 450,
-  gravity: {
-    x: 0,
-    y: 0
-  }
-}
+  // Send the new player to relevant region
+  SendMessageToWorker(Character.area, { Action: "ADD_PLAYER", Player: Character } );
 
-// physics
-const physics = new ArcadePhysics(config);
+  // emit the "JoinedGameServer" event to this connected socket, sending the object for the relevant region
+  socket.emit("JoinedGameServer", { RegionData: GameRegions[Character.area], Character: Character });
 
-//const player = physics.add.body(20, 20, 4, 8);
-//physics.moveTo(player, 100, 100, 100);
-//player.setVelocityX(0);
-//const platform = physics.add.staticBody(20, 40, 10, 10);
-//physics.add.collider(player, platform);
+  // Send the new player to every other player in the same area
+  io.to(Character.area).emit("PlayerJoined", Character);
 
-let tick = 0
-const update = () => {
-  //console.log(player.x, player.y);
-  physics.world.update(tick * 1000, 1000 / 60);
-  physics.world.postUpdate(tick * 1000, 1000 / 60);
-  tick++;
-  //console.clear();
-}
-
-setInterval(() => {
-  update();
-}, 1000 / 60);
-
-io.on('connection', async ( socket ) => {
-
-  const character = await CM.Get(socket.request._query['CharacterID'], socket.id);
-  Players[socket.id] = character;
-
-  console.log(character);
-
-  socket.emit('connected', Players);
-  io.to(character.area).emit('player-connected', character);
-  socket.join(character.area);
+  // Newly connected player joins that areas channel
+  socket.join(Character.area);
 
   // when a player moves, update our players array with the new position, then send that position to the other clients
-  socket.on('player-moved', async (to) => {
-    const player = Players[socket.id];
-    player.x = to.x;
-    player.y = to.y;
-    socket.broadcast.emit('player-moved', player.x, player.y, player.socket);
+  socket.on("PlayerMoved", async (to) => {
+    SendMessageToWorker(Character.area, { Action: "MOVE_PLAYER", Player: to, Socket: socket.id } );
+    io.to(Character.area).emit("PlayerMoved", GameRegions[Character.area].players[socket.id].x, GameRegions[Character.area].players[socket.id].y, socket.id);
+    console.table(to);
   });
 
   // when a player disconnects, remove them from our players object and update their pos/area in the db
-  socket.on('disconnect', async () => {
+  socket.on("disconnect", async () => {
+    SendMessageToWorker(Character.area, { Action: "REMOVER_PLAYER", Player: Character } );
+    //await Character.Update(socket.id);
+    io.emit("disconnected", socket.id);
     console.log("player disconnected", socket.id);
-    await Character.Update(Players[socket.id]);
-    io.emit('disconnected', socket.id);
-    delete Players[socket.id];
   });
 
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Equipment changed
-  /*socket.on('move-item', async (data) => {
+// Equipment changed
+/*socket.on('move-item', async (data) => {
 
     var player = Players[socket.id];
     var inventory = player.inventory;
@@ -194,7 +205,7 @@ io.on('connection', async ( socket ) => {
 
   });*/
 
-  /*socket.on('character-used-ability', async (data) => {
+/*socket.on('character-used-ability', async (data) => {
     const player = Players[socket.id];
     const npc = Npc.Npcs.find(n => n.id == data.target);
     const ability = AbilityData.find(a => a.id == data.ability);
@@ -234,7 +245,7 @@ io.on('connection', async ( socket ) => {
 
   });*/
 
-  /*socket.on('npc-proximity', async (id) => {
+/*socket.on('npc-proximity', async (id) => {
     console.log(`${socket.id} aggroed ${id}`);
     const npc = Npc.Npcs.find(n => n.id == id);
 
@@ -250,15 +261,15 @@ io.on('connection', async ( socket ) => {
     io.to(npc.area).emit('npc-move-to', npc.id, npc.target);
   });*/
 
-  /*socket.on('npc-moved', async (data) => {
+/*socket.on('npc-moved', async (data) => {
     const npc = Npc.Npcs.find(n => n.id == data.id);
     npc.x = data.x;
     npc.y = data.y;
     npc.distanceToTarget = data.distance;
   });*/
 
-  // When a player enters a map transition, get the transition data and update their pos/area
-  /*socket.on('change-area', async (to) => {
+// When a player enters a map transition, get the transition data and update their pos/area
+/*socket.on('change-area', async (to) => {
     const player = Players[socket.id];
     player.area = to.area;
     player.x = to.x;
@@ -266,11 +277,10 @@ io.on('connection', async ( socket ) => {
     socket.emit('load-area', {x: to.x, y: to.y, area: to.area});
   });*/
 
-  /*socket.on('npc-interact', async (id) => {
+/*socket.on('npc-interact', async (id) => {
     const npc = Npc.Npcs.find(npc => npc.id == id);
     socket.emit('npc-interact', npc);
   });*/
-
 
 // NPC Respawning Loop
 /*setInterval( () => {
@@ -314,7 +324,6 @@ io.on('connection', async ( socket ) => {
   });
 
 }, 500);*/
-
 
 /*function angle () {
   var p1 = { x: 20, y: 20 };

@@ -1,21 +1,15 @@
-class NpcManager {
+class ItemManager {
 
-  constructor () {
-    this.Npcs = require('../Data/npc_data.js');
-    this.Npcs.forEach((npc, i) => {
-      npc.target = null;
-      npc.startingX = npc.x;
-      npc.startingY = npc.y;
-      npc.threat = [];
-      npc.loot = [];
-      npc.distanceToTarget = 0;
-    });
+  constructor (db) {
+    this.db = db;
   }
 
-  async Get ( id ) {
-    return id;
+  async GetNPCData () {
+    const [Rows] = await this.db.promise().query(`SELECT * FROM data_npcs`);
+    this.data = Rows;
+    return this.data;
   }
 
 }
 
-module.exports = NpcManager;
+module.exports = ItemManager;

@@ -1,3 +1,6 @@
+import Sign from "../classes/sign.js";
+import Tree from "../classes/tree.js";
+
 export default class MapManager {
 
   constructor ( scene ) {
@@ -28,27 +31,24 @@ export default class MapManager {
 
     this.map.water = this.map.createLayer("Water", AllTileSets).setScale(Scale).setCollisionByExclusion([-1]);
     this.map.createLayer("Ground", AllTileSets).setScale(Scale);
-    this.map.createLayer("InvisibleWall", AllTileSets).setScale(Scale);
-    this.map.createLayer("Trees", AllTileSets).setScale(Scale);
-    this.map.createLayer("Port", AllTileSets).setScale(Scale);
+    this.map.walls = this.map.createLayer("Walls", AllTileSets).setScale(Scale).setCollisionByExclusion([-1]);
+    this.map.createLayer("Walls_Passable", AllTileSets).setScale(Scale);
     this.map.createLayer("Ground_Overlay", AllTileSets).setScale(Scale);
+    this.map.cliffs = this.map.createLayer("Cliffs", AllTileSets).setScale(Scale).setCollisionByExclusion([-1]);
 
-    return this.map;
+    this.map.objects.forEach((objectsLayers) => {
 
-    /*this.currentMap.objects.forEach((objectsLayers) => {
-
-      if ( objectsLayers.name == "AreaTransitions" ) {
-        objectsLayers.objects.forEach((transition) => {
-          var t = this.scene.physics.add.image(transition.x, transition.y, 'items', 3);
-          t.area = transition.properties[0].value;
-          t.newX = parseInt(transition.properties[1].value);
-          t.newY = parseInt(transition.properties[2].value);
-          t.setBodySize(240, 60);
-          this.scene.areaTransitions.add(t);
-        });
+      if ( objectsLayers.name == "Signs" ) {
+        objectsLayers.objects.forEach((sign) => { new Sign(this.scene, sign) });
       }
 
-    });*/
+      if ( objectsLayers.name == "Trees" ) {
+        objectsLayers.objects.forEach((tree) => { new Tree(this.scene, tree) });
+      }
+      
+    });
+
+    return this.map;
 
   }
 

@@ -1,12 +1,15 @@
 class ItemManager {
-  constructor(db) {
+
+  constructor (db) {
     this.db = db;
   }
 
-  async GetItemData() {
-    const [rows] = await this.db.promise().query(`SELECT * FROM data_items`);
-    return rows;
+  async GetItemData () {
+    const [Rows] = await this.db.promise().query(`SELECT * FROM data_items`);
+    this.data = Rows;
+    return true;
   }
+
 }
 
 module.exports = ItemManager;

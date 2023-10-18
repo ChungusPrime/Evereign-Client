@@ -26,12 +26,16 @@ export default class ServerSelect extends Phaser.GameObjects.Container {
 
   setServers ( servers ) {
 
-    servers.forEach(server => {
-      this.add( new Button(this.scene, this.scene.scale.width * 0.5, this.scene.scale.height * this.button_y, 'button1', 'button2', server.name, this.scene.ConnectToGameServer.bind(this.scene, server.name, server.address)) );
-      this.button_y += 0.075;
-    });
+    if ( servers != null ) {
 
-    this.scene.add.existing(this);
+      servers.forEach(server => {
+        this.add( new Button(this.scene, this.scene.scale.width * 0.5, this.scene.scale.height * this.button_y, 'button1', 'button2', server.name, this.scene.ConnectToGameServer.bind(this.scene, server.name, server.address)) );
+        this.button_y += 0.075;
+      });
+  
+      this.scene.add.existing(this);
+
+    }
 
   }
   

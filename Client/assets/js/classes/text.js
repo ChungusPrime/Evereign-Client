@@ -5,7 +5,8 @@ export default class Text extends Phaser.GameObjects.Text {
       super (scene, x, y, text, {
         fontSize: `${size}px`,
         fill: "#fff",
-        wordWrap: wrap
+        wordWrap: wrap,
+        fontFamily: 'Mooli'
       });
 
       this.setOrigin(0.5);

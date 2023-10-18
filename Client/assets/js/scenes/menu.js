@@ -19,9 +19,6 @@ export default class Menu extends Phaser.Scene {
 
     this.input.mouse.disableContextMenu();
 
-    this.SX = this.scale.width / 100;
-    this.SY = this.scale.height / 100;
-
     this.sound.play('music1');
     this.input.setDefaultCursor('url(./assets/images/click_cursor.png), pointer');
     this.add.image(0, 0, 'menu-background').setDisplaySize(this.scale.width, this.scale.height).setOrigin(0);
@@ -56,7 +53,8 @@ export default class Menu extends Phaser.Scene {
     // Currently selected character
     this.CharacterID = null;
 
-    this.offline_button = new Button( this, this.scale.width * 0.1, this.scale.height * 0.1, "button1", "button2", "Offline Test", this.StartOfflineTest.bind(this) );
+    this.offline_button = new Button( this, this.scale.width * 0.1, this.scale.height * 0.1, "button1", "button2", "Offline Test", this.StartOfflineGame.bind(this) );
+    this.online_button = new Button( this, this.scale.width * 0.1, this.scale.height * 0.2, "button1", "button2", "Online Test", this.StartOnlineGame.bind(this) );
 
     // Check if the authentication server is online
     this.GetAuthServerStatus();
@@ -108,14 +106,25 @@ export default class Menu extends Phaser.Scene {
     this.message.setVisible(true);
     this.spinner.setVisible(true);
 
-    await axios({ method: 'post', url: "http://localhost:8081/login", 
+    await axios({ method: 'post', url: "http://localhost:8081/login",
       data: {
         username: this.LoginPanel.getAt(2).getChildByName('username').value,
         password: this.LoginPanel.getAt(2).getChildByName('password').value
       }
     })
     .then( (result) => {
+
       console.log(result);
+
+      if ( result.data.message != "Success" ) {
+        this.auth_message.setText("Incorrect username or password");
+        this.auth_message.setVisible(true);
+        this.spinner.setVisible(false);
+        this.message.setVisible(false);
+        this.LoginPanel.setVisible(true);
+        return;
+      }
+
       this.user = result.data.user;
       this.auth_message.setText(result.data.message);
       this.auth_message.setVisible(true);
@@ -127,11 +136,6 @@ export default class Menu extends Phaser.Scene {
     })
     .catch( (error) => {
       console.log(error);
-      this.auth_message.setText("Incorrect username or password");
-      this.auth_message.setVisible(true);
-      this.spinner.setVisible(false);
-      this.message.setVisible(false);
-      this.LoginPanel.setVisible(true);
     });
 
   }
@@ -259,12 +263,12 @@ export default class Menu extends Phaser.Scene {
     this.RegistrationPanel.visible = true;
   }
 
-  testScene() {
-    this.scene.start("Game", { character: 1, server: "localhost:8082" });
+  StartOnlineGame() {
+    this.scene.start( "Game", { env: "Online", character: 1, server: "localhost:8082" } );
   }
 
-  StartOfflineTest () {
-    this.scene.start("OfflineGame");
+  StartOfflineGame () {
+    this.scene.start( "Game", { env: "Offline", character: 1, server: "localhost:8082" } );
   }
 
 }

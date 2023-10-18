@@ -3,7 +3,6 @@ import Phaser from 'phaser';
 import Preload from './scenes/preload.js';
 import Menu from './scenes/menu.js';
 import Game from './scenes/game.js';
-import OfflineGame from './scenes/offline_game.js';
 import UI from './scenes/ui.js';
 
 const width = window.innerWidth;
@@ -19,7 +18,6 @@ const config = {
   scene: [
     Preload,
     Menu,
-    OfflineGame,
     Game,
     UI
   ],
