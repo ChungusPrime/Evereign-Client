@@ -2,6 +2,7 @@
 * text=auto
 
 /Client/node_modules
+/Client/dist
 /AuthenticationServer/node_modules
 /GameServer/node_modules
 /Data

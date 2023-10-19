@@ -7,6 +7,8 @@ import Login from "../classes/login.js";
 import Registration from "../classes/registration.js";
 import CharacterList from "../classes/character_list.js";
 
+import Cursor1 from '../../images/click_cursor.png';
+
 import axios from 'axios';
 
 export default class Menu extends Phaser.Scene {
@@ -20,7 +22,7 @@ export default class Menu extends Phaser.Scene {
     this.input.mouse.disableContextMenu();
 
     this.sound.play('music1');
-    this.input.setDefaultCursor('url(./assets/images/click_cursor.png), pointer');
+    this.input.setDefaultCursor(`url(${Cursor1}), pointer`);
     this.add.image(0, 0, 'menu-background').setDisplaySize(this.scale.width, this.scale.height).setOrigin(0);
 
     // Full width message to show when a request is in progress

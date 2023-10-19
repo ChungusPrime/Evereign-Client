@@ -1,4 +1,6 @@
-import Phaser from 'phaser';
+import './sass/main.scss';
+
+import * as Phaser from 'phaser';
 
 import Preload from './js/scenes/preload.js';
 import Menu from './js/scenes/menu.js';
@@ -8,9 +10,7 @@ import UI from './js/scenes/ui.js';
 const width = window.innerWidth;
 const height = window.innerHeight;
 
-console.log(width, height);
-
-const config = {
+const Evereign = new Phaser.Game({
   type: Phaser.AUTO,
   parent: 'evereign',
   width: 1920,
@@ -35,6 +35,4 @@ const config = {
   },
   pixelArt: true,
   roundPixels: true
-};
-
-new Phaser.Game(config);
+});
