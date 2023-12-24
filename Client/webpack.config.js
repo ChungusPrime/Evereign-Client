@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: "development",
-    watch: false,
+    watch: true,
     devtool: "source-map",
     entry: {
         evereign: './src/main.ts'
@@ -14,6 +14,7 @@ module.exports = {
             { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/, },
             { test: /\.(png|svg|jpg|jpeg|gif|html|mp3|json)$/i, type: 'asset/resource', },
             { test: /\.s[ac]ss$/i, use: [ MiniCssExtractPlugin.loader, "css-loader", "sass-loader", ],},
+            { test: /\\.(png|jp(e*)g|svg|gif)$/, use: ['file-loader'], }
         ],
     },
     resolve: {

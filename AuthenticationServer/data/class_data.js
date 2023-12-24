@@ -1,8 +1,8 @@
 const Classes = [
   {
-    name: "Soldier",
-    description: `Soldiers are relentless warriors, they use their exceptional conditioning and prowess in melee combat to take on foes toe-to-toe.\n
-      Soldiers are known for their ability to withstand incredible amounts of damage and to fight on even when others would falter.\n
+    name: "Gladiator",
+    description: `Gladiators are relentless warriors, they use their exceptional conditioning and prowess in melee combat to take on foes toe-to-toe.\n
+      Gladiators are known for their ability to withstand incredible amounts of damage and to fight on even when others would falter.\n
       Subclasses:\n
       Praetorian (Melee, Tank)\n
       Spellblade (Melee, Physical Damage, Magic Damage)\n
