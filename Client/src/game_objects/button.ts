@@ -1,6 +1,7 @@
 import Menu from "../scenes/menu";
 
 export default class Button extends Phaser.GameObjects.Container {
+  
   key: string;
   hoverKey: string;
   text: string;

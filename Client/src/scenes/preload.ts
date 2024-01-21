@@ -7,7 +7,6 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
-    this.add.text(this.scale.width / 0.5, this.scale.height / 0.5, "Loading Assets").setOrigin(0.5);
 
     // HTML 
     this.load.html("AuthenticationForm", Assets.AuthenticationForm);
@@ -16,17 +15,17 @@ export default class Preload extends Phaser.Scene {
     this.load.html("ChatBox", Assets.ChatWindow);
 
     // UI
-    this.load.image("spinner", Assets.Spinner);
+    this.load.image("spinner", Assets.SpinnerIcon);
     this.load.image("menu-background", Assets.MenuBackground);
-    this.load.image("panel", Assets.Panel);
-    this.load.image("button1", Assets.LongButton);
-    this.load.image("button2", Assets.LongButtonPressed);
-    this.load.image("button3", Assets.SmallButton);
-    this.load.image("button4", Assets.SmallButtonPressed);
+    this.load.image("panel", Assets.BluePanel);
+    this.load.image("button1", Assets.BlueButton);
+    this.load.image("button2", Assets.BlueButtonPressed);
+    this.load.image("button3", Assets.BlueSquareButton);
+    this.load.image("button4", Assets.BlueSquareButtonPressed);
 
     // Cursors
-    this.load.image("cursor", Assets.Cursor1);
-    this.load.image("attack_cursor", Assets.Cursor2);
+    this.load.image("cursor", Assets.GreyCursorHand);
+    this.load.image("attack_cursor", Assets.SilverCursorSword);
 
     // Tree Sprites
     this.load.image("oak", Assets.Oak);
@@ -49,16 +48,24 @@ export default class Preload extends Phaser.Scene {
     this.load.spritesheet("characters", Assets.CharacterSprites, { frameWidth: 16, frameHeight: 16 });
 
     // Tilemaps
-    this.load.tilemapTiledJSON("E1", Assets.E1);
+    this.load.tilemapTiledJSON("D1", Assets.D1);
 
     // Minimaps
-    this.load.image("E1-Minimap", Assets.E1Minimap);
+    this.load.image("D1-Minimap", Assets.D1Minimap);
 
     // Tilesets
-    this.load.image("tiles-1", Assets.Tiles1);
-    this.load.image("tiles-2", Assets.Tiles2);
-    this.load.image("tiles-3", Assets.Tiles3);
-    this.load.image("tiles-4", Assets.Tiles4);
+    this.load.image("Admurin_Outdoor", Assets.Admurin_Outdoor);
+    this.load.image("Admurin_Outdoor_Recolour", Assets.Admurin_Outdoor_Recolour);
+    this.load.image("Admurin_Indoor", Assets.Admurin_Indoor);
+    this.load.image("Admurin_HouseBlocks", Assets.Admurin_HouseBlocks);
+    this.load.image("RogueAdventure_Village", Assets.RogueAdventure_Village);
+    this.load.image("RogueAdventure_Jungle_Extras", Assets.RogueAdventure_Jungle_Extras);
+    this.load.image("RogueAdventure_Jungle", Assets.RogueAdventure_Jungle);
+    this.load.image("RogueAdventure_Ground_Tiles", Assets.RogueAdventure_Ground_Tiles);
+    this.load.image("RogueAdventure_Wasteland_Water", Assets.RogueAdventure_Wasteland_Water);
+    this.load.image("RogueAdventure_Interior", Assets.RogueAdventure_Interior);
+    this.load.image("RogueAdventure_Graveyard", Assets.RogueAdventure_Graveyard);
+    this.load.image("RogueAdventure_tree03_s_01_animation", Assets.RogueAdventure_tree03_s_01_animation);
 
     // Sounds
     this.load.audio("click", [Assets.Click]);
@@ -66,7 +73,25 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start("Menu");
+
+    const animations = [
+      { key: 'gladiator_walk', frames: [ 0, 1 ] },
+      { key: 'godsworn_walk', frames: [ 6, 7 ] },
+      { key: 'operative_walk', frames: [ 8, 9 ] },
+      { key: 'arcanist_walk', frames: [ 12, 13 ] },
+      { key: 'harbinger_walk', frames: [ 14, 15 ] },
+    ];
+
+    animations.forEach(anim => {
+      this.anims.create({ 
+        key: anim.key, 
+        frames: this.anims.generateFrameNumbers('characters', { frames: anim.frames }),
+        frameRate: 5,
+        repeat: -1
+      });
+    });
+
+    this.scene.start("Menu", { disconnected: false });
   }
 
 }

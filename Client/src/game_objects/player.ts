@@ -13,6 +13,7 @@ interface CharacterData {
   health: number;
   speed: number;
   area: string;
+  faction: string
 }
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
@@ -31,12 +32,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   // Character Data
   class: any;
   speed: number;
-  last_pos: { x: number; y: number; };
   subclass: any;
   level: any;
   exp: any;
   currentHealth: any;
   maxHealth: any;
+  faction: string;
 
   Inventory: Array<any>;
   Equipment: Array<any>;
@@ -47,6 +48,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   Land: Array<any>;
   
   Mainhand: string = null;
+  Offhand: string = null
 
   // Controls
   Cursors: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -62,18 +64,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   Six: Phaser.Input.Keyboard.Key;
   
   constructor( scene: Game, CharacterData: CharacterData, Socket: Socket ) {
-    console.log(CharacterData);
+
     super( scene, CharacterData.x, CharacterData.y, "characters", 0 );
+
     this.scene = scene;
     this.Socket = Socket;
     Object.assign(this, CharacterData);
     this.LastX = this.x;
     this.LastY = this.y;
-    this.speed = 100;
-    console.log(this);
+    this.speed = 80;
+
     scene.add.existing(this);
-    this.setActive(true);
     scene.physics.world.enable(this);
+    
     scene.cameras.main.startFollow(this);
     this.setCollideWorldBounds(true);
     this.Cursors = scene.input.keyboard.createCursorKeys();
@@ -90,7 +93,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     return this;
   }
 
-  update (time: number, delta: number) {
+  update ( time: number, delta: number ) {
 
     if (this.Cursors.left.isDown || this.A.isDown ) {
       this.setVelocityX(-this.speed);
@@ -108,6 +111,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(this.speed);
     } else {
       this.setVelocityY(0);
+    }
+
+    if ( this.body.velocity.x == 0 && this.body.velocity.y == 0 ) {
+      this.stop();
+    } else {
+      if ( !this.anims.isPlaying ) {
+        this.play("gladiator_walk");
+      }
     }
 
     if(Phaser.Input.Keyboard.JustDown(this.One)) this.UseQuickbarSlot(1);
@@ -135,13 +146,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //this.cameras.main.fadeOut(500, 0, 0, 0);
   }
 
-  AttackTarget ( target: NPC ) {
-    console.log(target);
+  AttackNPC ( target: NPC ) {
+    console.log(target.id);
+    this.scene.Socket.emit('Player-Attack-NPC', { npc: target.id });
     if ( this.Mainhand == null ) return console.log("No weapon equipped");
     if ( Phaser.Math.Distance.BetweenPoints(this, target) > 15 ) return console.log("Target is too far away");
-    const damage = 1;
-    //this.basicAttackCooldown = this.basicAttackCooldownMax;
-    return damage;
   }
 
 }

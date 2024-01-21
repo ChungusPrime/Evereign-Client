@@ -1,165 +1,176 @@
 import { Worker } from 'worker_threads';
 import Database from './db';
 import CharacterManager from './CharacterManager';
-import * as express from "express";
+import express, { Request, Response } from 'express';
 import * as http from "http";
 import * as socketio from "socket.io";
-const path = require('path');
-const util = require('node:util');
-const cors = require("cors");
+import cors from "cors";
+import { RegionData, RegionDataTick, NpcChangedTarget, NPCMoved, NPCStartMove, NPCStopMove, NPCRespawned, NPCDied, NPCReset, WorkerMessageTypes } from './types/message_types';
+import routes from './routes';
+import NPC from './NPC';
+import Character from './Character';
 
-const app = express().options("*", cors()).use([ 
+const app = express().options("*", cors()).use([
   express.urlencoded({ extended: true }),
   express.json(),
   express.static(__dirname)
 ]);
 
-const server = http.createServer(app);
-const io = new socketio.Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
+const Server = http.createServer(app);
+const io = new socketio.Server(Server, { cors: { origin: "*", methods: ["GET", "POST"] } });
+const ListenPort: string = process.env.PORT as string ?? process.argv[2];
+const DatabaseName: string = process.env.DATABASE as string ?? process.argv[3];
+const ServerName: string = process.env.SERVER as string ?? process.argv[4];
+const DB = new Database(DatabaseName);
+const CM = new CharacterManager(DB);
+let PlayerCount = 0;
 
-let ListenPort: string = process.env.PORT as string ?? process.argv[2];
-let DatabaseName: string = process.env.DATABASE as string ?? process.argv[3];
-let ServerName: string = process.env.SERVER as string ?? process.argv[4];
+let GameRegions: Record<string, RegionData> = {};
 
-// Data
-let DB = new Database();
-let CM = new CharacterManager(DB);
+app.use('/', routes(CM));
 
-let GameRegions: Record<string, { name: string; players: Record<string, any>; npcs: Record<string, any>; worker: Worker; }> = {};
-
-/**
- * Boot up the server
- */
+/** Boot up the server **/
 (async () => {
+  
   try {
-    await DB.Connect(DatabaseName);
-    await SetupRegions();
-    server.listen(ListenPort, () => {
+    await DB.Connect();
+    console.log("Main thread connected to Database");
+
+    const Regions: Array<string> = [
+      "A1", "A2", "A3", "A4",
+      "B1", "B2", "B3", "B4",
+      "C1", "C2", "C3", "C4",
+      "D1", "D2", "D3", "D4"
+    ];
+  
+    for ( const region of Regions ) {
+      if ( region !== "D1" ) continue;
+      GameRegions[region] = {
+        name: region,
+        Players: {},
+        NPCs: {},
+        NPCsSyncData: {},
+        PlayersSyncData: {},
+        Events: {},
+        Nodes: {},
+        Land: {},
+        worker: await initRegionWorker(region)
+      };
+    }
+
+    Server.listen(ListenPort, () => {
       console.log(`${ServerName} finished start up and is running on Port ${ListenPort}`);
     });
+
   } catch (error) {
-    console.log(error);
+    console.error("Error starting up...", error);
   }
+
 })();
 
-/**
- * Set up each region of the game with a worker dedicated to it
- */
-async function SetupRegions () {
-  const Regions: Array<string> = [
-    "A1", "A2", "A3", "A4",
-    "B1", "B2", "B3", "B4",
-    "C1", "C2", "C3", "C4",
-    "D1", "D2", "D3", "D4",
-    "E1", "E2", "E3", "E4"
-  ];
-  
-  Regions.forEach( (region: string) => {
-    // Only use E1 for now
-    if ( region != "E1" ) return;
-    GameRegions[region] = { name: region, players: {}, npcs: {}, worker: null };
-
-    let worker = new Worker("./GameRegion.js", {
-      workerData: GameRegions[region]
-    }).on("message", (message) => {
-      ProcessWorkerMessage(message);
-    }).on("error", (error) => {
-      console.error(error);
-    }).on("exit", (code) => {
-      console.log(`Worker exited with code ${code}.`);
-    });
-
-    GameRegions[region].worker = worker;
+async function initRegionWorker ( region: string ): Promise<Worker> {
+  const worker = new Worker("./GameRegion.js", {
+    workerData: { name: region }
+  }).on("message", ( message: WorkerMessageTypes ) => {
+    workerMessageHandlers[message.type](message);
+  }).on('error', (error) => {
+    console.error(`Worker error in ${region}:`, error);
+  }).on('exit', (code) => {
+    console.log(`Worker in ${region} exited with code ${code}`);
   });
-
-  return true;
+  return worker;
 }
 
-/**
- * Process any incoming messages sent from workers and emit updated data to relevant sockets.
- * @param {object} message - The data to process
- */
-const ProcessWorkerMessage = ( message: { type: string, region: string, data: any } ) => {
+const workerMessageHandlers: Record<string, ( message: WorkerMessageTypes ) => void> = {
+  REGION_DATA_TICK: SyncRegionData,
+  NPC_CHANGED_TARGET: EmitNpcChangedTarget,
+  NPC_STARTED_MOVING: EmitNpcStartMove,
+  NPC_STOPPED_MOVING: EmitNpcStopMove,
+  NPC_RESPAWNED: EmitNpcRespawn,
+  NPC_DIED: EmitNpcDied,
+  NPC_RESET: EmitNpcReset,
+};
 
-  // Sync region data
-  if ( message.type == "REGION_DATA_TICK" ) {
-    GameRegions[message.region].players = message.data.players;
-    GameRegions[message.region].npcs = message.data.players;
-    //console.log(GameRegions[message.region]);
-  }
-
-  if ( message.type == "PLAYER_REMOVED" ) {
-    io.to(message.region).emit('PLAYER_REMOVED', {});
+function SyncRegionData ( message: RegionDataTick ): void {
+  let region = GameRegions[message.region];
+  region.Players = message.Players;
+  region.NPCs = message.NPCs;
+  for ( const key in message.NPCs ) {
+    region.NPCsSyncData[key] = {
+      id: message.NPCs[key].id,
+      x: message.NPCs[key].x,
+      y: message.NPCs[key].y,
+      target: message.NPCs[key].target,
+      speed: message.NPCs[key].speed
+    };
   }
 }
 
-/**
- * Listen for client socket.io connections
- */
+function EmitNpcChangedTarget ( message: NpcChangedTarget ): void {
+  io.to(message.region).emit( "NpcChangedTarget", message );
+}
+
+function EmitNpcStartMove ( message: NPCStartMove ): void {
+  io.to(message.region).emit( "NpcStartMove", message );
+}
+
+function EmitNpcReset ( message: NPCReset ): void {
+  io.to(message.region).emit( "NpcReset", message);
+}
+
+function EmitNpcStopMove ( message: NPCStopMove ): void {
+  io.to(message.region).emit( "NpcStopMove", message);
+}
+
+function EmitNpcRespawn ( message: NPCRespawned ): void {
+  io.to(message.region).emit( "NpcRespawned", message );
+}
+
+function EmitNpcDied ( message: NPCDied ): void {
+  io.to(message.region).emit( "NpcDied", message );
+}
+
+/** Listen for client socket.io connections **/
 io.on( "connection", async ( socket: socketio.Socket ) => {
 
-  //console.log(`socket ${socket.id} requesting to load character ${socket.handshake.query.CharacterID}`);
+  const CharacterID = socket.handshake.query.CharacterID as string;
+  const AccountID = socket.handshake.query.AccountID as string;
+  const SocketID = socket.id as string;
+  console.log(`connected socketID: ${SocketID} - accountID: ${AccountID} - characterID: ${CharacterID}`);
 
-  // Get the requested character
-  let CharacterID = socket.handshake.query.CharacterID as string;
-  let Character = await CM.GetCharacter(CharacterID, socket.id);
+  if ( !CharacterID || !AccountID ) {
+    //socket.disconnect(true);
+  }
 
-  // Add the new character to the region worker
+  let Character = await CM.GetCharacter(CharacterID, AccountID, SocketID);
+
   GameRegions[Character.area].worker.postMessage({ Action: "ADD_PLAYER", Character: Character });
+  PlayerCount++;
 
-  // Send the character and region data to the requesting client
   socket.emit("ConnectedToGameServer", {
     Character: Character,
-    Players: GameRegions[Character.area].players,
-    NPCs: GameRegions[Character.area].npcs
+    Players: GameRegions[Character.area].PlayersSyncData,
+    NPCs: GameRegions[Character.area].NPCsSyncData
   });
-
-  // Send the character to currently connected clients in the same area
+  
   io.to(Character.area).emit("PlayerJoined", Character);
-
-  // Join this socket to the area
   socket.join(Character.area);
 
   socket.on("Player-Move", async (Coordinates: { x: number, y: number }) => {
-    //console.log(Coordinates);
     GameRegions[Character.area].worker.postMessage({ Action: "MOVE_PLAYER", Coordinates: Coordinates, Socket: socket.id });
-    io.to(Character.area).emit("PlayerMoved", Coordinates.x, Coordinates.y, socket.id);
+    io.to(Character.area).emit("PlayerMoved", { socket: socket.id, x: Coordinates.x, y: Coordinates.y });
   });
 
   socket.on("disconnect", async () => {
-    GameRegions[Character.area].worker.postMessage({ Action: "REMOVE_PLAYER", Character: Character });
-    await CM.Update(Character);
-    io.to(Character.area).emit("disconnected", socket.id);
-    //console.log("player disconnected", socket.id);
+    GameRegions[Character.area].worker.postMessage({ Action: "REMOVE_PLAYER", Socket: socket.id });
+    //await CM.UpdateCharacter(Character);
+    PlayerCount--;
+    io.to(Character.area).emit("PlayerLeft", socket.id);
   });
 
 });
 
-app.get("/dev/monitor", async (req: any, res: any) => {
+app.post("/server_status", async (req: Request, res: Response) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.sendFile(path.join(__dirname, '/monitor.html'));
-});
-
-app.post("/dev/monitor/data", async (req: any, res: any) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  //console.log("get fresh data");
-  res.json({ RegionData: {} });
-});
-
-app.post("/status", async (req: any, res: any) => {
-  //console.log(`Getting character list for account ${req.body.id}`);
-  res.header("Access-Control-Allow-Origin", "*");
-  const characters = await CM.GetAccountList(req.body.id);
-  //console.log(characters);
-  res.json({
-    characters: characters ?? null,
-    success: true
-  });
-});
-
-app.post("/create_character", async (req: any, res: any) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  //console.log(req.body);
-  const character = CM.CreateCharacter(req.body.Character, req.body.UserID);
-  res.json({ success: true, character: character });
+  res.json({ players: PlayerCount });
 });

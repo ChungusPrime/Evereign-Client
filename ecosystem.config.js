@@ -1,8 +1,9 @@
 export const apps = [
+
   {
     name: "Authentication Server",
     script: "./AuthenticationServer/server.js",
-    instances: "1",
+    instances: 1,
     exec_mode: "cluster",
     env: {
       NODE_ENV: "production",
@@ -15,7 +16,7 @@ export const apps = [
   {
     name: "Sentinel - Game Server",
     script: "./GameServer/server.js",
-    instances: "1",
+    instances: 1,
     exec_mode: "cluster",
     env: {
       NODE_ENV: "production",
@@ -28,7 +29,7 @@ export const apps = [
   {
     name: "Crown - Game Server",
     script: "./GameServer/server.js",
-    instances: "1",
+    instances: 1,
     exec_mode: "cluster",
     env: {
       NODE_ENV: "production",
@@ -41,7 +42,7 @@ export const apps = [
   {
     name: "Phantom - Game Server",
     script: "./GameServer/server.js",
-    instances: "1",
+    instances: 1,
     exec_mode: "cluster",
     env: {
       NODE_ENV: "production",
@@ -54,7 +55,7 @@ export const apps = [
   {
     name: "Reaver - Game Server",
     script: "./GameServer/server.js",
-    instances: "1",
+    instances: 1,
     exec_mode: "cluster",
     env: {
       NODE_ENV: "production",
@@ -62,5 +63,6 @@ export const apps = [
       DATABASE: "evereign_reaver",
       SERVER: "REAVER"
     },
-  },
+  }
+
 ];

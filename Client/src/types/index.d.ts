@@ -22,3 +22,19 @@ declare module "*.html" {
     const path: string;
     export default path;
 }
+
+interface LoginResponse {
+    message: string;
+    success: boolean;
+    userid: number | undefined;
+    username: string | undefined;
+    classes: { name: string, description: string, starting: string }[] | undefined;
+    factions: { name: string, description: string }[] | undefined;
+    races: { name: string, description: string }[] | undefined;
+    servers: { name: string, address: string, players: string, status: string }[] | undefined;
+}
+
+interface RegisterResponse {
+    message: string;
+    success: boolean;
+}

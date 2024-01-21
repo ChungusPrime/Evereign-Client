@@ -1,21 +1,28 @@
-import Phaser from "phaser";
+import Game from "../scenes/game";
 
 export default class Tree extends Phaser.GameObjects.Image {
-  tree: any;
-  constructor(scene, tree) {
-    super(scene, tree.x * 3, tree.y * 3, "oak");
+
+  scene: Game;
+  x: number;
+  y: number;
+  type: string;
+
+  constructor ( scene: Game, tree: any ) {
+
+    super( scene, tree.x, tree.y, tree.type );
 
     this.scene = scene;
-    this.tree = tree;
+    this.x = tree.x;
+    this.y = tree.y;
+    this.type = tree.type;
 
-    this.setScale(3);
+    this.setScale(1);
 
     this.setOrigin(0.5, 1);
 
-    this.setInteractive(/*new Phaser.Geom.Rectangle(sign.x * 3, sign.y * 3, sign.width * 3, sign.height * 3), Phaser.Geom.Rectangle.Contains*/);
+    this.setInteractive();
 
     this.on("pointerover", () => {
-      console.log(this);
       this.setTintFill(0x34a623);
     });
 

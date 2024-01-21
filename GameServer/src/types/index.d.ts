@@ -1,3 +1,5 @@
+import { Worker } from 'worker_threads';
+
 declare module "*.jpg" {
     const path: string;
     export default path;

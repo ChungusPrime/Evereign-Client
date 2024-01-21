@@ -4,6 +4,12 @@ Javascript based 2D fantasy MMORPG using Phaser and Node JS
 Factions
 
 Character Races
+Human
+Elf
+Dwarf
+Gnome
+Half-Orc
+Undead
 
 Character Attributes
     Strength - Increases damage of melee attacks
@@ -14,8 +20,8 @@ Character Attributes
     Personality - Improves quest rewards and trading prices
 
 Character Abilities
-
-
+    Mix of passive and active
+    Passive includes proficiencies which allow character to use specific classes of equipment
 
 Character Equipment slots
     Main Hand
@@ -41,7 +47,7 @@ Character Skills
 
     All crafting skills can be used by all characters, however only to a basic level unless they choose to be a specialist in those skills
     Non-specialists can craft common and uncommon quality items 
-    Specialists can craft rare and higher quality items
+    Specialists can craft rare and higher quality items, with bonuses to crafting and gathering such as increased yield, decreased gathering time, lower production costs etc
     A character can choose to be a specialist in 5 crafting skills
 
     Combat
@@ -83,46 +89,39 @@ Character Skills
 
 Character Classes
 
-    -- Gladiator
+    -- Gladiator --
     Gladiators are relentless warriors, they use their exceptional conditioning and prowess in melee combat to take on foes toe-to-toe. Gladiators are known for 
     their ability to withstand incredible amounts of damage and to fight on even when others would falter.
 
-    -- Subclasses
+    -- Subclasses --
     Praetorian (Melee, Tank)
     Description: Focuses on defence, rather than offense. Has abilities to take attention away from allies and force enemies to focus on the Praetorian instead.
-    Abilities:
-    Heavy Armour Training (Allows use of heavy armour)
-    Shield Training (Allows use of shields)
-    Fortitude (Extra 2 health points per level)
-    Draw Attention (Taunt one enemy to focus on you)
-
+    Abilities gained when taken: Heavy Armour Proficiency (Allows use of heavy armour), Shield Proficiency (Allows use of shields), Fortitude (Extra 2 health points per level), Draw Attention (Taunt one enemy to focus on you)
     Level 6 Trait: Dauntless (Ability, increase block and parry chance, and gain temporary health points)
     Level 9 Trait: Never falter (Ability, immune to all damage for a short time)
     
     Spellblade (Melee, Physical Damage, Magic Damage)
     Description: Sacrifices some raw strength to study the magical arts, allowing the Spellblade to infuse their attacks with magic
-    Abilities:
-    Imbue Weapon (Ability, Enchant weapon to deal extra magic damage on hit)
-    Force bolt (Ability, Short range attack, deals force damage to target)
-
-    Level 6 Trait: aoe fire spell 
+    Abilities gained when taken: Imbue Weapon (Ability, Enchant weapon to deal extra magic damage on hit), Force bolt (Ability, Short range attack, deals force damage to target)
+    Level 6 Trait: aoe fire spell
     Level 9 Trait: Magic adept
 
     Champion (Melee, Physical Damage)
     Description: Focuses on close range mastery, wielding two weapons at once to overwhelm foes
-    Abilities: 
-    Dual Wield Training (Allows the use of two 1-handed weapons at a time)
-    Double Strike (Attack with both equipped weapons for extra damage, generates Adrenaline)
-
-    Level 6: Martial Expert (Passive, weapon attack cooldowns are reduced by 1 second)
+    Abilities gained when taken: Dual Wield Proficiency (Allows the use of two 1-handed weapons at a time), Double Strike (Attack with both equipped weapons for extra damage, generates Adrenaline)
+    Level 6: Rapid Follow up (Passive, weapon attack cooldowns are reduced by 1 second)
     Level 9: Overwhelm (Ability, three weapon attacks in quick succession, costs adrenaline)
-
-    Resource: Adrenaline. Build up by using weaker abilities, consume to use more powerful ones
+    
+    Captain (Ally support, enemy debuff)
+    Description: Uses charisma to inspire allies and demoralise foes
+    Abilities: TBD
+    Level 6: TBD
+    Level 9: TBD
 
     -- Starting Abilities
-    Light Armour Training
-    Medium Armour Training
-    Sword Training
+    Light Armour Proficiency
+    Medium Armour Proficiency
+    Sword Proficiency
 
     -- Starting Equipment
     Rusted Chailmail
@@ -130,19 +129,21 @@ Character Classes
     2x Food
     2x Healing Potions
 
-    Progression:
+    Class Resource: Adrenaline: Build up by using weaker abilities, consume to use more powerful ones
+
+    Base Class Progression:
     Level 1 - Gain starting abilities and equipment
     Level 2 - Rush (Ability, Charge at an enemy and deal damage on contact, generates Adrenaline)
-    Level 3 - Choose Subclass (Praetorian, Spellblade or Champion) and gain assosciated abilities
+    Level 3 - Choose Subclass (Praetorian, Spellblade, Champion or Captain) and gain assosciated abilities
     Level 4 - One crafting specialisation point
     Level 5 - Focused Strikes (Ability, consume Adrenaline to deal extra damage with weapon attacks)
-    Level 6 - Subclass Trait (Praetorian: Spellblade: Champion:)
+    Level 6 - Subclass Trait
     Level 7 - Sweep (Ability, strike the target, and another within 5 meters for the same damage, costs Adrenaline)
     Level 8 - One crafting specialisation point
-    Level 9 - Subclass Trait (Praetorian: Spellblade: Champion:)
+    Level 9 - Subclass Trait
     Level 10 - Bloodlust (Ability, restore some health and deal more damage, costs Adrenaline)
 
-    Every level - 1 attribute point, 3 health points
+    Every level - 2 attribute points, 4 health points
     
     ----------------------------------------------------------------------
 
@@ -155,7 +156,7 @@ Character Classes
     Mender (Melee, Healer)
     Ascended (Melee, Physical/Magic Damage)
     
-    Resource: Retribution
+    Resource: Favour
 
     -- Starting Abilities
     Light Armour Proficiency
@@ -181,18 +182,20 @@ Character Classes
     Marksman (Ranged, Physical Damage)
     Agent (Melee, Physical Damage, Poison)
     Physician (Ranged, Healer)
+    Engineer (Deployable gadgets for support and offense)
     
-    Resource: Momentum
+    Class Resource: Momentum
 
     Starting Abilities:
     Light Armour Proficiency
     Dagger Proficiency
     Bow Proficiency
+
     Starting Equipment:
     Leather Armour
     Dagger
     Shortbow
-    50x Makeshift Arrows
+    50x Arrows
     2x Food
     2x Healing Potions
 
@@ -216,7 +219,7 @@ description: `The Harbinger is a dark mage who uses the powers of necromancy and
       Corruptor (Ranged, Magic Damage)\n
       Deathless (Ranged, Healer)\n
       Siphoner (Melee, Magic Damage)`,
-starting_description: `Resource: Peril\n`,
+starting_description: `Resource: Corruption\n`,
 },
 ];
 

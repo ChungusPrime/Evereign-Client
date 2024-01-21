@@ -1,12 +1,13 @@
 {
-  "name": "evereign",
+  "name": "evereign-client",
   "version": "0.2",
   "description": "Evereign Client",
-  "main": "js/main.js",
+  "main": "src/main.ts",
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build-dev": "webpack --config webpack.config.js --mode=development",
+    "build-prod": "webpack --config webpack.config.js --mode=production"
   },
-  "author": "",
+  "author": "Nathan Leadbitter",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.4.0",

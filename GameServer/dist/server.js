@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,136 +31,173 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", { value: true });
 const worker_threads_1 = require("worker_threads");
-const db_1 = require("./db");
-const CharacterManager_1 = require("./CharacterManager");
-const express = require("express");
-const http = require("http");
-const socketio = require("socket.io");
-const path = require('path');
-const util = require('node:util');
-const cors = require("cors");
-const app = express().options("*", cors()).use([
-    express.urlencoded({ extended: true }),
-    express.json(),
-    express.static(__dirname)
+const db_1 = __importDefault(require("./db"));
+const CharacterManager_1 = __importDefault(require("./CharacterManager"));
+const express_1 = __importDefault(require("express"));
+const http = __importStar(require("http"));
+const socketio = __importStar(require("socket.io"));
+const cors_1 = __importDefault(require("cors"));
+const routes_1 = __importDefault(require("./routes"));
+const app = (0, express_1.default)().options("*", (0, cors_1.default)()).use([
+    express_1.default.urlencoded({ extended: true }),
+    express_1.default.json(),
+    express_1.default.static(__dirname)
 ]);
-const server = http.createServer(app);
-const io = new socketio.Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
-let ListenPort = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : process.argv[2];
-let DatabaseName = (_b = process.env.DATABASE) !== null && _b !== void 0 ? _b : process.argv[3];
-let ServerName = (_c = process.env.SERVER) !== null && _c !== void 0 ? _c : process.argv[4];
-// Data
-let DB = new db_1.default();
-let CM = new CharacterManager_1.default(DB);
+const Server = http.createServer(app);
+const io = new socketio.Server(Server, { cors: { origin: "*", methods: ["GET", "POST"] } });
+const ListenPort = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : process.argv[2];
+const DatabaseName = (_b = process.env.DATABASE) !== null && _b !== void 0 ? _b : process.argv[3];
+const ServerName = (_c = process.env.SERVER) !== null && _c !== void 0 ? _c : process.argv[4];
+const DB = new db_1.default(DatabaseName);
+const CM = new CharacterManager_1.default(DB);
+let PlayerCount = 0;
 let GameRegions = {};
+app.use('/', (0, routes_1.default)(CM));
+/** Boot up the server **/
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    // Server Start Up
     try {
-        yield DB.Connect(DatabaseName);
-        yield SetupRegions();
-        server.listen(ListenPort, () => {
-            console.log(`${ServerName} finished start up and is running on Port ${ListenPort}`);
-        });
-    }
-    catch (error) {
-        console.log(error);
-    }
-}))();
-function SetupRegions() {
-    return __awaiter(this, void 0, void 0, function* () {
-        // Set up a worker for each region of the game world
+        yield DB.Connect();
+        console.log("Main thread connected to Database");
         const Regions = [
             "A1", "A2", "A3", "A4",
             "B1", "B2", "B3", "B4",
             "C1", "C2", "C3", "C4",
-            "D1", "D2", "D3", "D4",
-            "E1", "E2", "E3", "E4"
+            "D1", "D2", "D3", "D4"
         ];
-        Regions.forEach((region) => {
-            // Only use E1 for now
-            if (region != "E1")
-                return;
-            GameRegions[region] = { name: region, players: {}, npcs: {}, worker: null };
-            let worker = new worker_threads_1.Worker("./GameRegion.js", {
-                workerData: GameRegions[region]
-            }).on("message", (message) => {
-                ProcessWorkerMessage(message);
-            }).on("error", (error) => {
-                console.error(error);
-            }).on("exit", (code) => {
-                console.log(`Worker exited with code ${code}.`);
-            });
-            GameRegions[region].worker = worker;
+        for (const region of Regions) {
+            if (region !== "D1")
+                continue;
+            GameRegions[region] = {
+                name: region,
+                Players: {},
+                NPCs: {},
+                NPCsSyncData: {},
+                PlayersSyncData: {},
+                Events: {},
+                Nodes: {},
+                Land: {},
+                worker: yield initRegionWorker(region)
+            };
+        }
+        Server.listen(ListenPort, () => {
+            console.log(`${ServerName} finished start up and is running on Port ${ListenPort}`);
         });
-        return true;
+    }
+    catch (error) {
+        console.error("Error starting up...", error);
+    }
+}))();
+function initRegionWorker(region) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const worker = new worker_threads_1.Worker("./GameRegion.js", {
+            workerData: { name: region }
+        }).on("message", (message) => {
+            workerMessageHandlers[message.type](message);
+        }).on('error', (error) => {
+            console.error(`Worker error in ${region}:`, error);
+        }).on('exit', (code) => {
+            console.log(`Worker in ${region} exited with code ${code}`);
+        });
+        return worker;
     });
 }
-const ProcessWorkerMessage = (message) => {
-    // Sync region data
-    if (message.type == "REGION_DATA_TICK") {
-        GameRegions[message.region].players = message.data.players;
-        GameRegions[message.region].npcs = message.data.players;
-        console.log(GameRegions[message.region]);
-    }
-    if (message.type == "PLAYER_REMOVED") {
-        io.to(message.region).emit('PLAYER_REMOVED', {});
-    }
+const workerMessageHandlers = {
+    REGION_DATA_TICK: SyncRegionData,
+    NPC_CHANGED_TARGET: EmitNpcChangedTarget,
+    NPC_STARTED_MOVING: EmitNpcStartMove,
+    NPC_STOPPED_MOVING: EmitNpcStopMove,
+    NPC_RESPAWNED: EmitNpcRespawn,
+    NPC_DIED: EmitNpcDied,
+    NPC_RESET: EmitNpcReset,
 };
-// Listen for socket.io connections
+function SyncRegionData(message) {
+    let region = GameRegions[message.region];
+    region.Players = message.Players;
+    region.NPCs = message.NPCs;
+    for (const key in message.NPCs) {
+        region.NPCsSyncData[key] = {
+            id: message.NPCs[key].id,
+            x: message.NPCs[key].x,
+            y: message.NPCs[key].y,
+            target: message.NPCs[key].target,
+            speed: message.NPCs[key].speed
+        };
+    }
+}
+function EmitNpcChangedTarget(message) {
+    io.to(message.region).emit("NpcChangedTarget", {
+        socket: message.socket,
+        npc_id: message.npc_id,
+        npc_x: message.npc_x,
+        npc_y: message.npc_y
+    });
+}
+function EmitNpcStartMove(message) {
+    io.to(message.region).emit("NpcStartMove", {
+        npc_id: message.npc_id,
+        npc_x: message.npc_x,
+        npc_y: message.npc_y,
+        npc_speed: message.npc_speed
+    });
+}
+function EmitNpcReset(message) {
+    io.to(message.region).emit("NpcReset", {
+        npc_id: message.npc_id,
+        npc_x: message.npc_x,
+        npc_y: message.npc_y
+    });
+}
+function EmitNpcStopMove(message) {
+    io.to(message.region).emit("NpcStopMove", {
+        npc_id: message.npc_id,
+        npc_x: message.npc_x,
+        npc_y: message.npc_y
+    });
+}
+function EmitNpcRespawn(message) {
+    io.to(message.region).emit("NpcRespawned", message.npc_id, message.npc_x, message.npc_y);
+}
+function EmitNpcDied(message) {
+    io.to(message.region).emit("NpcDied", message.npc_id, message.npc_x, message.npc_y);
+}
+/** Listen for client socket.io connections **/
 io.on("connection", (socket) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(`socket ${socket.id} requesting to load character ${socket.handshake.query.CharacterID}`);
-    // Get the requested character
-    let CharacterID = socket.handshake.query.CharacterID;
-    let Character = yield CM.GetCharacter(CharacterID, socket.id);
-    // Add the new character to the region worker
+    const CharacterID = socket.handshake.query.CharacterID;
+    const AccountID = socket.handshake.query.AccountID;
+    const SocketID = socket.id;
+    console.log(`connected socketID: ${SocketID} - accountID: ${AccountID} - characterID: ${CharacterID}`);
+    if (!CharacterID || !AccountID) {
+        //socket.disconnect(true);
+    }
+    let Character = yield CM.GetCharacter(CharacterID, AccountID, SocketID);
+    //console.table(Character, [ "id", "name", "area", "x", "y" ]);
     GameRegions[Character.area].worker.postMessage({ Action: "ADD_PLAYER", Character: Character });
-    // Send the character and region data to the requesting client
+    PlayerCount++;
     socket.emit("ConnectedToGameServer", {
         Character: Character,
-        Players: GameRegions[Character.area].players,
-        NPCs: GameRegions[Character.area].npcs
+        Players: GameRegions[Character.area].PlayersSyncData,
+        NPCs: GameRegions[Character.area].NPCsSyncData
     });
-    // Send the character to currently connected clients in the same area
     io.to(Character.area).emit("PlayerJoined", Character);
-    // Join this socket to the area
     socket.join(Character.area);
     socket.on("Player-Move", (Coordinates) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(Coordinates);
         GameRegions[Character.area].worker.postMessage({ Action: "MOVE_PLAYER", Coordinates: Coordinates, Socket: socket.id });
-        io.to(Character.area).emit("PlayerMoved", Coordinates.x, Coordinates.y, socket.id);
+        io.to(Character.area).emit("PlayerMoved", { socket: socket.id, x: Coordinates.x, y: Coordinates.y });
     }));
     socket.on("disconnect", () => __awaiter(void 0, void 0, void 0, function* () {
-        GameRegions[Character.area].worker.postMessage({ Action: "REMOVE_PLAYER", Character: Character });
-        yield CM.Update(Character);
-        io.to(Character.area).emit("disconnected", socket.id);
-        console.log("player disconnected", socket.id);
+        GameRegions[Character.area].worker.postMessage({ Action: "REMOVE_PLAYER", Socket: socket.id });
+        //await CM.UpdateCharacter(Character);
+        PlayerCount--;
+        io.to(Character.area).emit("PlayerLeft", socket.id);
     }));
 }));
-app.get("/dev/monitor", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/server_status", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.header("Access-Control-Allow-Origin", "*");
-    res.sendFile(path.join(__dirname, '/monitor.html'));
-}));
-app.post("/dev/monitor/data", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.header("Access-Control-Allow-Origin", "*");
-    console.log("get fresh data");
-    res.json({ RegionData: {} });
-}));
-app.post("/status", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(`Getting character list for account ${req.body.id}`);
-    res.header("Access-Control-Allow-Origin", "*");
-    const characters = yield CM.GetAccountList(req.body.id);
-    console.log(characters);
-    res.json({
-        characters: characters !== null && characters !== void 0 ? characters : null,
-        success: true
-    });
-}));
-app.post("/create_character", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.header("Access-Control-Allow-Origin", "*");
-    console.log(req.body);
-    const character = CM.CreateCharacter(req.body.Character, req.body.UserID);
-    res.json({ success: true, character: character });
+    res.json({ players: PlayerCount });
 }));

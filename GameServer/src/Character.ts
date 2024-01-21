@@ -1,11 +1,12 @@
 export default class Character {
 
-  // data from DB columns
+  // Database schema columns
   id: number; 
   player_id: number;
   name: string;
   class: string;
   subclass: string;
+  race: string;
   area: string;
   x: number;
   y: number;
@@ -13,7 +14,7 @@ export default class Character {
   faction: string;
   xp: number;
   inventory: string;
-  equipped: string;
+  equipment: string;
   quests: string;
   abilities: string;
   skills: string;
@@ -24,13 +25,17 @@ export default class Character {
   personality: number;
   intelligence: number;
   willpower: number;
+  sprite: number;
 
   // data set manually
-  body: any;
+  body: Body;
   socket: string;
+  width: number = 8;
+  height: number = 16;
 
-  constructor ( Character: Character ) {
+  constructor ( Character: Character, Socket: string ) {
     Object.assign(this, Character);
+    this.socket = Socket;
   }
 
 }

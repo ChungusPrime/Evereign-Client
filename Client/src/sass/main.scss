@@ -1,6 +1,13 @@
+@import 'login';
+@import 'registration';
+
 @font-face {
     font-family: Mooli;
     src: url('../fonts/Mooli-Regular.ttf');
+}
+
+* {
+    font-family: Mooli;
 }
 
 body {
@@ -14,19 +21,4 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  font-family: Mooli;
-}
-
-input {
-    margin-bottom: 6px;
-    height: 50px;
-    width: 100%;
-    border: 3px solid gray;
-    border-radius: 8px;
-    font-size: larger;
-    font-weight: bold;
-}
-
-#input-form {
-    width: 20vw;
 }

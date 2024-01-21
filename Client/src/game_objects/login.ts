@@ -1,52 +1,52 @@
 import axios from "axios";
 import Menu from "../scenes/menu";
-import Button from "./button";
-import Text from "./text";
-
-interface LoginResponse {
-  user: { id: number, username: string };
-  message: string;
-  classes: { name: string, description: string, starting: string }[];
-  factions: { name: string, description: string }[];
-  races: { name: string, description: string }[];
-}
+import ModularButton from "./modular_button";
 
 export default class Login extends Phaser.GameObjects.Container {
 
-  HTML: Phaser.GameObjects.DOMElement;
   scene: Menu;
-  LoginButton: Button;
-  RegisterButton: Button;
+  HTML: Phaser.GameObjects.DOMElement;
+  Background: Phaser.GameObjects.Rectangle;
+  OriginMarker: Phaser.GameObjects.Text;
+  
+  // Buttons
+  LoginButton: ModularButton;
+  RegisterButton: ModularButton;
+
+  // HTML Inputs
   UsernameInput: HTMLInputElement;
   PasswordInput: HTMLInputElement;
-  Background: Phaser.GameObjects.Rectangle;
-  LoginResponse: LoginResponse;
-  OriginMarker: Phaser.GameObjects.Text;
 
-  constructor(scene: Menu, x: number, y: number) {
+  constructor ( scene: Menu, x: number, y: number ) {
 
     super( scene, 0, 0 );
+
     this.scene = scene;
+    
+    this.OriginMarker = this.scene.add.text(0, 0, "x", { align: "center" }).setOrigin(0, 0);
 
-    this.OriginMarker = this.scene.add.text(0, 0, "X");
+    this.OriginMarker.setVisible(false);
 
+    // Get the center of the screen
     this.x = scene.scale.width / 2;
     this.y = scene.scale.height / 2;
 
-    this.width = 500;
-    this.height = 400;
-    this.displayWidth = 500;
-    this.displayHeight = 400;
+    // Set the width and height of the container
+    this.width = (scene.scale.width * 0.2) + 5;
+    this.height = scene.scale.height * 0.325;
+    this.displayWidth = (scene.scale.width * 0.2) + 5;
+    this.displayHeight = scene.scale.height * 0.325;
 
+    // reduce the x and y by half of the width and height to center the container (basically like origin 0.5)
     this.x = this.x - (this.displayWidth / 2);
     this.y = this.y - (this.displayHeight / 2);
 
-    this.Background = scene.add.rectangle(0, 0, this.width, this.height, 0x000000, 0.9).setOrigin(0).setStrokeStyle(1, 0xffffff, 1);
+    this.Background = scene.add.rectangle(0, 0, this.displayWidth, this.displayHeight, 0x000000, 0.5).setOrigin(0).setStrokeStyle(2, 0xffffff, 0.5).setVisible(false);
+    this.HTML = this.scene.add.dom(5, 10).createFromCache('AuthenticationForm').setOrigin(0);
 
-    this.HTML = this.scene.add.dom(0, 0).createFromCache('AuthenticationForm').setOrigin(0);
+    this.LoginButton = new ModularButton(scene, 5, this.HTML.displayHeight + 15, (scene.scale.width * 0.2) - 5, 50, "Grey", "Login", this.AttemptLogin.bind(this), 0);
+    this.RegisterButton = new ModularButton(scene, 5, this.HTML.displayHeight + 70, (scene.scale.width * 0.2) - 5, 50, "Grey", "Create Account", scene.ShowRegistrationForm.bind(scene), 0);
 
-    this.LoginButton = new Button(scene, scene.scale.width * 0.5, scene.scale.height * 0.5, 'button1', 'button2', 'Login', this.AttemptLogin.bind(this));
-    this.RegisterButton = new Button(scene, scene.scale.width * 0.5, scene.scale.height * 0.7, 'button1', 'button2', 'Create Account', scene.ShowRegistrationForm.bind(scene));
     this.UsernameInput = document.getElementById('username') as HTMLInputElement;
     this.PasswordInput = document.getElementById('password') as HTMLInputElement;
     
@@ -56,28 +56,48 @@ export default class Login extends Phaser.GameObjects.Container {
   }
 
   async AttemptLogin(): Promise<boolean> {
-    this.setVisible(false);
-    this.scene.Message.setText("Attempting to log in").setVisible(true);
-    this.scene.Spinner.setVisible(true);
-    
-    const result = await axios.post<LoginResponse>('http://localhost:8081/login', { username: this.UsernameInput.value, password: this.PasswordInput.value });
-    
-    this.LoginResponse = result.data;
-    console.log(this.LoginResponse);
 
-    if ( this.LoginResponse.message != "Success" ) {
+    try {
+      this.setVisible(false);
+      this.scene.Message.setText("Logging in...").setVisible(true);
+      this.scene.Spinner.setVisible(true);
+      const response = await axios.post<LoginResponse>(`${this.scene.AuthServerAddress}/login`, {
+        username: this.UsernameInput.value,
+        password: this.PasswordInput.value
+      });
+  
+      if ( response.data.success == true ) {
+        this.scene.AccountID = response.data.userid;
+        this.scene.Username = response.data.username;
+        this.scene.Classes = response.data.classes;
+        this.scene.Races = response.data.races;
+        this.scene.Factions = response.data.factions;
+        this.scene.Servers = response.data.servers;
+        this.scene.CharacterCreationPanel.setOptions();
+        this.scene.Message.setText(response.data.message).setVisible(false);
+        this.scene.Spinner.setVisible(false);
+        this.setVisible(false);
+        this.scene.ServerSelectPanel.UpdateList();
+        this.scene.ServerSelectPanel.setVisible(true);
+        return true;
+      }
+  
       this.scene.Message.setText("Incorrect username or password").setVisible(true);
       this.scene.Spinner.setVisible(false);
       this.setVisible(true);
       return false;
+
+    } catch ( error ) {
+
+      this.scene.Message.setText("Login failed").setVisible(true);
+      this.scene.Spinner.setVisible(false);
+      this.setVisible(true);
+      return false;
+
     }
 
-    this.scene.AccountID = result.data.user.id;
-    this.scene.Message.setText(result.data.message).setVisible(true);
-    this.scene.Spinner.setVisible(false);
-    this.setVisible(false);
-    this.scene.ServerSelectPanel.setVisible(true);
-    return true;
+
+    
   }
   
 }
