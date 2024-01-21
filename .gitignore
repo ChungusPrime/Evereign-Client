@@ -6,4 +6,6 @@
 /GameServer/node_modules
 *.env
 */ecosystem.config.js
-*/dist
+/AuthenticationServer/dist
+/GameServer/dist
+/Client/dist
