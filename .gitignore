@@ -4,3 +4,6 @@
 /Client/node_modules
 /AuthenticationServer/node_modules
 /GameServer/node_modules
+*.env
+*/ecosystem.config.js
+*/dist
