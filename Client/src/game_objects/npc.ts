@@ -1,7 +1,6 @@
 import Game from '../scenes/game';
 import Cursor from '../images/cursorGauntlet_blue.png';
 import AttackCursor from '../images/cursorSword_silver.png';
-import npc from '../../assets/js/classes/npc';
 import OtherPlayer from './other_player';
 import Player from './player';
 
