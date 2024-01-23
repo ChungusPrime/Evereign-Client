@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import cors from "cors";
 import bcrypt from 'bcrypt';
 import axios from 'axios';
+import fs from 'node:fs';
 
 // Game Data
 import Classes from './class_data';
@@ -19,6 +20,7 @@ const app = express().options("*", cors()).use([
 
 const Server: http.Server = http.createServer(app);
 const DB: Database = new Database();
+const TodaysDateString: string = new Date().toDateString();
 
 /* Environment Variables */
 const ListenPort: string = process.env.PORT;
@@ -28,17 +30,8 @@ const DbHost: string = process.env.DB_HOST;
 const DbPass: string = process.env.DB_PASS;
 const DbUser: string = process.env.DB_USER;
 const Environment: string = process.env.ENVIRONMENT;
-console.log(`ENVIRONMENT: ${Environment} - PORT: ${ListenPort}, SERVER: ${ServerName}, DB: ${DatabaseName} (HOST: ${DbHost}, PASS: ${DbPass}, USER: ${DbUser})`);
 
-// Check each game server at regular intervals for player count and online status
-interface ServerData {
-  name: string;
-  address: string;
-  players: number;
-  status: string;
-}
-
-let Servers: ServerData[] = [];
+let Servers: { name: string; address: string; players: number; status: string; }[] = [];
 
 if ( Environment == "local" ) {
   Servers = [
@@ -56,38 +49,62 @@ if ( Environment == "local" ) {
   ];
 }
 
+export default function Log ( message: string ) {
+  let content = `[${new Date().toUTCString()}] ${message}`;
+  console.log(content);
+  fs.writeFile(`logs/${TodaysDateString}.txt`, `${content}\n`, { flag: 'a+' }, err => {
+    if (err) console.error(err);
+  });
+}
+
 /* Boot up the server */
 (async () => {
+
   try {
+
+    if (!fs.existsSync("logs")) {
+      fs.mkdirSync("logs");
+      Log(`Debug log folder created`);
+    }
+
+    Log(`${ServerName} starting up - ENVIRONMENT: ${Environment} - PORT: ${ListenPort}, SERVER: ${ServerName}, DB: ${DatabaseName} (HOST: ${DbHost}, PASS: ${DbPass}, USER: ${DbUser})`);
+
     await DB.Connect(DatabaseName, DbHost, DbPass, DbUser);
-    await RefreshServerData();
+
+    await RefreshGameServerData();
+
     Server.listen(ListenPort, () => {
-      console.log(`${ServerName} finished start up and is running on Port ${ListenPort}...`);
-      setInterval(RefreshServerData, 60000);
+      Log(`${ServerName} finished start up and is running on Port ${ListenPort}...`);
+      setInterval(RefreshGameServerData, 60000);
     });
+
   } catch ( error ) {
-    console.log(error);
+
+    Log(error);
+
   }
+
 })();
 
-async function RefreshServerData(): Promise<boolean> {
-  console.log("Refreshing game server data...");
+// Check each game server at regular intervals for player count and online status
+async function RefreshGameServerData(): Promise<boolean> {
+  Log("Refreshing game server data...");
   try {
     for (const server of Servers) {
       try {
         const response = await axios.post<{ players: number }>(`${server.address}/server_status`);
         server.players = response.data.players;
         server.status = "Online";
-      } catch (error) {
+      } catch ( error ) {
+        Log(`${error} - Could not get status of server ${server.name}`);
         server.players = 0;
         server.status = "Offline";
       }
     }
-  } catch (error) {
-    console.error(error);
+  } catch ( error ) {
+    Log(`${error}`);
   }
 
-  //console.table(Servers);
   return true;
 }
 
@@ -107,27 +124,41 @@ app.post('/create_account', async ( request: Request, response: Response ) => {
 
   try {
 
+    Log(`Account creation request from ${request.socket.remoteAddress}`);
+
     const Username: string = request.body.username;
+    if ( Username == "" || Username.length < 6 ) {
+      Log(`Username error, entered value: ${Username} (length: ${Username.length})`);
+      return response.json({ success: false, message: "Username must be at least 6 characters" });
+    }
+
     const Password: string = request.body.password;
+    if ( Password == "" || Password.length < 6 ) {
+      Log(`Password error, entered value: ${Password} (length: ${Password.length})`);
+      return response.json({ success: false, message: "Password must be at least 6 characters" });
+    }
+
     const EmailAdd: string = request.body.email;
-  
-    if ( Username == "" || Username.length < 6 ) return response.json({ success: false, message: "Username must be at least 6 characters" });
-    if ( Password == "" || Password.length < 6 ) return response.json({ success: false, message: "Password must be at least 6 characters" });
-    if ( EmailAdd == "" || EmailAdd.length < 6 ) return response.json({ success: false, message: "Email Address must be at least 6 characters" });
+    if ( EmailAdd == "" || EmailAdd.length < 6 ) {
+      Log(`Email address error, entered value: ${EmailAdd} (length: ${EmailAdd.length})`);
+      return response.json({ success: false, message: "Email Address must be at least 6 characters" });
+    }
     
     const EncryptedPassword = await bcrypt.hash(Password, 10);
     const SQL: string = 'INSERT INTO players VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const Params = [ crypto.randomUUID({ disableEntropyCache: true}), Username, EmailAdd, EncryptedPassword, null, 0, new Date(), null, null, null ];
-    const Result = await DB.Query(SQL, Params);
-    console.table(Result);
+    const ID = crypto.randomUUID({ disableEntropyCache: true});
+    const Params = [ ID, Username, EmailAdd, EncryptedPassword, null, 0, new Date(), null, null, null ];
+    const [Result] = await DB.Query(SQL, Params);
     if ( Result.affectedRows == 1 ) {
       response.json({ success: true, message: "Account created succesfully" });
+      Log(`Account creation successful - ID: ${ID}`);
     } else {
       response.json({ success: false, message: "Account could not be created" });
+      Log(`Account creation failed`);
     }
 
   } catch (error) {
-    console.log(`New Account Creation: ${error}`);
+    Log(`Account creation failed ${error}`);
     response.json({ success: false, message: "Failed to create account" });
   }
 
@@ -140,7 +171,7 @@ app.post('/login', async ( request: Request, response: Response ) => {
 
   try {
 
-    console.log(`Login request from ${request.socket.remoteAddress} with USERNAME: ${request.body.username} and PASSWORD: ${request.body.password})`);
+    Log(`Login request from ${request.socket.remoteAddress} with USERNAME: ${request.body.username} and PASSWORD: ${request.body.password}`);
 
     const Username: string = request.body.username;
     const Password: string = request.body.password;
@@ -160,14 +191,14 @@ app.post('/login', async ( request: Request, response: Response ) => {
 
     // Create unique session token
     //const SessionToken = crypto.randomUUID({ disableEntropyCache: true});
-    //console.log(SessionToken);
 
     // Return account and game data
     response.json({ success: true, message: "Success", userid: User[0].id, username: User[0].username, classes: Classes, factions: Factions, races: Races, servers: Servers });
 
   } catch (error) {
-    console.log(error);
+    Log(error);
     response.json({ success: false, message: "Login Failed" });
   }
   
 });
+

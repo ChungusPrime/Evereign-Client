@@ -1,4 +1,5 @@
 import mysql from "mysql2/promise";
+import Log from "./server";
 
 export default class Database {
   
@@ -12,9 +13,9 @@ export default class Database {
     this.credentials.host = host;
     try {
       this.connection = await mysql.createConnection(this.credentials);
-      console.log('Database connection established...');
+      Log('Database connection established...');
     } catch ( error ) {
-      console.log('could not connect to database', error);
+      
     }
   }
 
@@ -23,7 +24,7 @@ export default class Database {
       const Result = await this.connection.query(statement, params);
       return Result;
     } catch (error) {
-      console.log(error);
+      Log(error);
     }
   }
 

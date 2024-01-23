@@ -9,3 +9,5 @@
 /AuthenticationServer/dist
 /GameServer/dist
 /Client/dist
+log.txt
+*/logs
