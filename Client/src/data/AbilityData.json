@@ -1,0 +1,93 @@
+[
+	{
+		"id" : 1,
+		"name" : "Sword Training",
+		"requirements" : "None",
+		"type" : "Passive",
+		"description" : "Allows use of sword type weapons"
+	},
+	{
+		"id" : 2,
+		"name" : "Sword Proficiency",
+		"requirements" : "Skill: Swords: 50",
+		"type" : "Passive",
+		"description" : "+1 damage with swords"
+	},
+	{
+		"id" : 3,
+		"name" : "Sword Expert",
+		"requirements" : "Skill: Swords: 200",
+		"type" : "Passive",
+		"description" : "+3 damage with swords"
+	},
+	{
+		"id" : 4,
+		"name" : "Sword Master",
+		"requirements" : "Skill: Swords: 500",
+		"type" : "Passive",
+		"description" : "+5 damage with swords"
+	},
+	{
+		"id" : 5,
+		"name" : "Mace Training",
+		"requirements" : "None",
+		"type" : "Passive",
+		"description" : "Allows use of mace type weapons"
+	},
+	{
+		"id" : 6,
+		"name" : "Mace Proficiency",
+		"requirements" : "Skill: Maces: 50",
+		"type" : "Passive",
+		"description" : "+1 damage with maces"
+	},
+	{
+		"id" : 7,
+		"name" : "Mace Expert",
+		"requirements" : "Skill: Maces: 200",
+		"type" : "Passive",
+		"description" : "+3 damage with maces"
+	},
+	{
+		"id" : 8,
+		"name" : "Mace Master",
+		"requirements" : "Skill: Maces: 500",
+		"type" : "Passive",
+		"description" : "+5 damage with maces"
+	},
+	{
+		"id" : 9,
+		"name" : "Bow Training",
+		"requirements" : "None",
+		"type" : "Passive",
+		"description" : "Basic training in the use of bows"
+	},
+	{
+		"id" : 10,
+		"name" : "Bow Proficiency",
+		"requirements" : "Skill: Bows: 50",
+		"type" : "Passive",
+		"description" : null
+	},
+	{
+		"id" : 11,
+		"name" : "Bow Expert",
+		"requirements" : "Skill: Bows: 200",
+		"type" : "Passive",
+		"description" : null
+	},
+	{
+		"id" : 12,
+		"name" : "Bow Master",
+		"requirements" : "Skill: Bows: 500",
+		"type" : "Passive",
+		"description" : null
+	},
+	{
+		"id" : 13,
+		"name" : "Forestry Efficiency",
+		"requirements" : "Racial",
+		"type" : "Passive",
+		"description" : "Increased wood gathered from trees, Decreased time taken to gather wood from trees"
+	}
+]

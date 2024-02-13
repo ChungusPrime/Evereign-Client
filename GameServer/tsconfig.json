@@ -6,7 +6,9 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "moduleResolution": "nodenext",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
   "include": ["**/*.ts"]
 }

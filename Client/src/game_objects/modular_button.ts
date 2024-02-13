@@ -35,6 +35,12 @@ export default class ModularButton extends Phaser.GameObjects.Container {
         this.hoverKey = "button2";
       break;
 
+      case "Grey-Small":
+        this.button = scene.add.image(0, 0, "button3");
+        this.key = "button3";
+        this.hoverKey = "button4";
+      break;
+
       case "Blue":
         this.button = scene.add.image(0, 0, "button1");
         this.key = "button1";
@@ -59,13 +65,13 @@ export default class ModularButton extends Phaser.GameObjects.Container {
         this.hoverKey = "button2";
     }
 
+    this.style = style;
+
     this.button.width = width;
     this.button.height = height;
     this.button.setDisplaySize(width, height);
     this.button.setSize(width, height);
-
     this.button.setInteractive();
-
     this.button.setOrigin(0.5);
 
     if ( origin != 0.5 ) {
@@ -74,7 +80,12 @@ export default class ModularButton extends Phaser.GameObjects.Container {
 
     this.buttonText = scene.add.text(0, 0, text, {
       fontSize: "24px",
-      fontFamily: 'Mooli'
+      fontFamily: 'Mooli',
+      align: "Center",
+      wordWrap: {
+        useAdvancedWrap: true,
+        width:this.button.width
+      }
     });
 
     Phaser.Display.Align.In.Center(this.buttonText, this.button);
@@ -87,15 +98,29 @@ export default class ModularButton extends Phaser.GameObjects.Container {
     this.button.on("pointerdown", () => {
       this.targetCallback();
       this.scene.sound.play('click');
-      this.button.setTexture("button1");
+
+      if ( this.style == "Grey-Small" ) {
+        this.button.setTexture("button3");
+      } else {
+        this.button.setTexture("button1");
+      }
+
     });
 
     this.button.on("pointerover", () => {
-      this.button.setTexture("button2");
+      if ( this.style == "Grey-Small" ) {
+        this.button.setTexture("button4");
+      } else {
+        this.button.setTexture("button2");
+      }
     });
 
     this.button.on("pointerout", () => {
-      this.button.setTexture("button1");
+      if ( this.style == "Grey-Small" ) {
+        this.button.setTexture("button3");
+      } else {
+        this.button.setTexture("button1");
+      }
     });
 
     scene.add.existing(this);

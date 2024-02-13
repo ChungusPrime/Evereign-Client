@@ -191,13 +191,20 @@ export const Admurin_Indoor: string = require("./images/Tileset_Indoors_v1.png")
 export const Admurin_HouseBlocks: string = require("./images/Tileset_v3_HouseBlocks.png");
 
 // Rogue Adventure
-export const RogueAdventure_Village: string = require("./images/RA_Village.png");
-export const RogueAdventure_Jungle_Extras: string = require("./images/RA_Jungle_Extras.png");
-export const RogueAdventure_Jungle: string = require("./images/RA_Jungle.png");
-export const RogueAdventure_Ground_Tiles: string = require("./images/RA_Ground_Tiles.png");
-export const RogueAdventure_Wasteland_Water: string = require("./images/RA_Wasteland_Water.png");
-export const RogueAdventure_Interior: string = require("./images/RA_Interior.png");
+export const RogueAdventure_Water: string = require("./images/RA_Animated_Water.png");
+export const RogueAdventure_Cavern: string = require("./images/RA_Cavern.png");
+export const RogueAdventure_Crypt: string = require("./images/RA_Crypt.png");
 export const RogueAdventure_Graveyard: string = require("./images/RA_Graveyard.png");
+export const RogueAdventure_Ground_Tiles: string = require("./images/RA_Ground_Tiles.png");
+export const RogueAdventure_Interior: string = require("./images/RA_Interior.png");
+export const RogueAdventure_Jungle: string = require("./images/RA_Jungle.png");
+export const RogueAdventure_Jungle_Extras: string = require("./images/RA_Jungle_Extras.png");
+export const RogueAdventure_Ruins: string = require("./images/RA_Ruins.png");
+export const RogueAdventure_Ship: string = require("./images/RA_Ship.png");
+export const RogueAdventure_Village: string = require("./images/RA_Village.png");
+export const RogueAdventure_Village_Animations: string = require("./images/RA_Village_Animations.png");
+export const RogueAdventure_Wasteland: string = require("./images/RA_Wasteland.png");
+export const RogueAdventure_Wasteland_Water: string = require("./images/RA_Wasteland_Water.png");
 export const RogueAdventure_tree03_s_01_animation: string = require("./images/tree03_s_01_animation.png");
 
 // Tilemaps

@@ -2,12 +2,12 @@
 @import 'registration';
 
 @font-face {
-    font-family: Mooli;
-    src: url('../fonts/Mooli-Regular.ttf');
+  font-family: Mooli;
+  src: url('../fonts/Mooli-Regular.ttf');
 }
 
 * {
-    font-family: Mooli;
+  font-family: Mooli;
 }
 
 body {
@@ -21,4 +21,9 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+}
+
+#evereign {
+  width: 100%;
+  height: 100%;
 }

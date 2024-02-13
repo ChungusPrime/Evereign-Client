@@ -4,7 +4,7 @@ import CharacterManager from './CharacterManager';
 
 const router = express.Router();
 
-export default function routes(CM: CharacterManager) {
+export default function routes( CM: CharacterManager, PlayerCount: number ) {
 
   router.get("/dev/monitor", async (req: Request, res: Response) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -25,8 +25,14 @@ export default function routes(CM: CharacterManager) {
 
   router.post("/create_character", async (req: Request, res: Response) => {
     res.header("Access-Control-Allow-Origin", "*");
-    const character = CM.CreateCharacter(req.body.Character, req.body.UserID);
+    const character = await CM.CreateCharacter(req.body.Character, req.body.UserID);
+    console.log(character);
     res.json({ success: true, character: character });
+  });
+
+  router.post("/server_status", async (req: Request, res: Response) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json({ players: PlayerCount });
   });
 
   return router;

@@ -2,6 +2,7 @@ import axios from "axios";
 import Menu from "../scenes/menu";
 import Button from "./button";
 import ButtonMulti from "./modular_button";
+import ModularButton from "./modular_button";
 
 export default class Registration extends Phaser.GameObjects.Container {
 
@@ -25,27 +26,27 @@ export default class Registration extends Phaser.GameObjects.Container {
     
     this.scene = scene;
 
-    this.OriginMarker = this.scene.add.text(0, 0, "X", { align: "center" });
+    this.OriginMarker = this.scene.add.text(0, 0, "X", { align: "center" }).setVisible(false);
 
     // Get the center of the screen
     this.x = scene.scale.width / 2;
     this.y = scene.scale.height / 2;
 
     // Set the width and height of the container
-    this.width = (scene.scale.width * 0.25) + 5;
+    this.width = (scene.scale.width * 0.2) + 5;
     this.height = scene.scale.height * 0.4;
-    this.displayWidth = (scene.scale.width * 0.25) + 5;
+    this.displayWidth = (scene.scale.width * 0.2) + 5;
     this.displayHeight = scene.scale.height * 0.4;
 
     // reduce the x and y by half of the width and height to center the container (basically like origin 0.5)
     this.x = this.x - (this.displayWidth / 2);
     this.y = this.y - (this.displayHeight / 2);
 
-    this.Background = scene.add.rectangle(0, 0, this.displayWidth, this.displayHeight, 0x000000, 1).setOrigin(0).setStrokeStyle(2, 0xffffff, 1);
+    this.Background = scene.add.rectangle(0, 0, this.displayWidth, this.displayHeight, 0x000000, 1).setOrigin(0).setStrokeStyle(2, 0xffffff, 1).setVisible(false);
     this.HTML = scene.add.dom(5, 5).createFromCache('RegistrationForm').setOrigin(0);
 
-    this.AttemptButton = new Button(scene, 5, this.HTML.displayHeight + 30, 'button1', 'button2', 'Confirm', this.AttemptRegistration.bind(this), 0);
-    this.CancelButton = new Button(scene, this.AttemptButton.button.getRightCenter().x + 10, this.HTML.displayHeight + 30, 'button1', 'button2', 'Cancel', scene.ShowLoginForm.bind(scene), 0);
+    this.AttemptButton = new ModularButton(scene, 5, this.HTML.displayHeight + 15, this.displayWidth - 10, 50, "Grey", "Confirm", this.AttemptRegistration.bind(this), 0);
+    this.CancelButton = new ModularButton(scene, 5, this.HTML.displayHeight + 70, this.displayWidth - 10, 50, "Grey", "Cancel", this.ShowLoginForm.bind(this), 0);
 
     this.UsernameInput = document.getElementById('account_username') as HTMLInputElement;
     this.PasswordInput = document.getElementById('account_password') as HTMLInputElement;
@@ -54,6 +55,11 @@ export default class Registration extends Phaser.GameObjects.Container {
     this.add([ this.Background, this.HTML, this.AttemptButton, this.CancelButton, this.OriginMarker ]);
     this.setVisible(false);
     scene.add.existing(this);
+  }
+
+  ShowLoginForm () {
+    this.setVisible(false);
+    this.scene.LoginPanel.setVisible(true);
   }
 
   async AttemptRegistration (): Promise<boolean> {
@@ -77,10 +83,9 @@ export default class Registration extends Phaser.GameObjects.Container {
       if ( result.data.success == true ) {
         this.scene.Message.setText("Account created, you may now login").setVisible(true);
         return true;
-      } else {
-        this.scene.Message.setText(result.data.message).setVisible(true);
-        return false;
       }
+
+      throw new Error("Could not create account");
 
     } catch ( error ) {
       this.scene.Message.setText("Could not create account").setVisible(true);

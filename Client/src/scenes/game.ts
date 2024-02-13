@@ -63,7 +63,7 @@ export default class Game extends Phaser.Scene {
   Socket: Socket;
   MapManager: MapManager;
   Map: Phaser.Tilemaps.Tilemap;
-  UIScene: UI;
+  UI: UI;
   Player: Player;
   OtherPlayers: Record<string, OtherPlayer> = {};
   NPCs: Record<string, NPC> = {};
@@ -94,7 +94,7 @@ export default class Game extends Phaser.Scene {
       this.Socket.connect();
     } catch (error) {
       console.log(error);
-      this.scene.start("Menu", { disconnected: false });
+      this.scene.start("Menu", { disconnected: true });
     }
 
     this.Socket.on('ConnectedToGameServer', ( Data: ConnectedToGameServer ) => {
@@ -134,7 +134,7 @@ export default class Game extends Phaser.Scene {
 
       this.Connected = true;
       this.scene.launch("UI", this);
-      this.UIScene = this.scene.get('UI') as UI;
+      this.UI = this.scene.get('UI') as UI;
       this.cameras.main.setZoom(3);
     });
 
@@ -172,6 +172,7 @@ export default class Game extends Phaser.Scene {
     this.Socket.on("disconnect", () => {
       console.log("Disconnected from server");
       this.scene.stop("UI");
+      this.scene.stop("Game");
       this.scene.start("Menu", { disconnected: true });
     });
 
@@ -180,6 +181,7 @@ export default class Game extends Phaser.Scene {
   logout () {
     this.Socket.disconnect();
     this.scene.stop("UI");
+    this.scene.stop("Game");
     this.scene.start("Menu", { disconnected: true });
   }
 

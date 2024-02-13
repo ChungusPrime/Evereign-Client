@@ -110,7 +110,7 @@ async function RefreshGameServerData(): Promise<boolean> {
 
 app.post('/status', async ( request: Request, response: Response ) => {
   response.header("Access-Control-Allow-Origin", "*");
-  response.json({ success: true, message: "Online" });
+  response.json({ success: true });
 });
 
 app.post('/refresh_server_list', async ( request: Request, response: Response ) => {
@@ -144,26 +144,35 @@ app.post('/create_account', async ( request: Request, response: Response ) => {
       return response.json({ success: false, message: "Email Address must be at least 6 characters" });
     }
     
-    const EncryptedPassword = await bcrypt.hash(Password, 10);
+    const EncryptedPassword: string = await bcrypt.hash(Password, 10);
     const SQL: string = 'INSERT INTO players VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const ID = crypto.randomUUID({ disableEntropyCache: true});
+    const ID: string = crypto.randomUUID({ disableEntropyCache: true});
     const Params = [ ID, Username, EmailAdd, EncryptedPassword, null, 0, new Date(), null, null, null ];
     const [Result] = await DB.Query(SQL, Params);
+
     if ( Result.affectedRows == 1 ) {
-      response.json({ success: true, message: "Account created succesfully" });
-      Log(`Account creation successful - ID: ${ID}`);
-    } else {
-      response.json({ success: false, message: "Account could not be created" });
-      Log(`Account creation failed`);
+      Log(`New Account creation successful - ID: ${ID}`);
+      return response.json({ success: true, message: "Account created succesfully" });
     }
 
-  } catch (error) {
-    Log(`Account creation failed ${error}`);
-    response.json({ success: false, message: "Failed to create account" });
+    Log(`New Account creation failed`);
+    return response.json({ success: false, message: "Failed to create new account" });
+
+  } catch ( error: any ) {
+    Log(`New Account creation failed - ${error}`);
+    return response.json({ success: false, message: "Failed to create new account" });
   }
 
 });
 
+app.get('/download', async ( request: Request, response: Response ) => {
+  response.header("Access-Control-Allow-Origin", "*");
+  return response.download('./dist/build.zip', function(err) {
+    if ( err ) {
+      console.log(err);
+    }
+  })
+});
 
 app.post('/login', async ( request: Request, response: Response ) => {
 
@@ -171,33 +180,43 @@ app.post('/login', async ( request: Request, response: Response ) => {
 
   try {
 
-    Log(`Login request from ${request.socket.remoteAddress} with USERNAME: ${request.body.username} and PASSWORD: ${request.body.password}`);
+    Log(`Login request from ${request.socket.remoteAddress} with username: ${request.body.username} and password: ${request.body.password}`);
 
     const Username: string = request.body.username;
+    if ( Username == "" || Username.length < 6 ) {
+      Log(`Username error, entered value: ${Username} (length: ${Username.length})`);
+      return response.json({ success: false });
+    }
+      
     const Password: string = request.body.password;
-  
-    if ( Username == "" || Username.length < 6 ) return response.json({ success: false, message: "Username must be at least 6 characters" });
-    if ( Password == "" || Password.length < 6 ) return response.json({ success: false, message: "Password must be at least 6 characters" });
+    if ( Password == "" || Password.length < 6 ) {
+      Log(`Password error, entered value: ${Password} (length: ${Password.length})`);
+      return response.json({ success: false });
+    }
 
     // Verify username
-    const SQL = "SELECT id, username, password FROM players WHERE username = ? LIMIT 1";
+    const SQL = "SELECT id, username, password, banned FROM players WHERE username = ? LIMIT 1";
     const Params = [Username];
     const [User] = await DB.Query(SQL, Params);
-    if ( User.length == 0 ) return response.json({ success: false, message: "Login Failed" });
+    if ( User.length == 0 ) {
+      Log(`Account not foundm looking for username: ${Username}`);
+      return response.json({ success: false });
+    }
 
     // Verify password
     const PasswordVerified = await bcrypt.compare(Password, User[0].password);
-    if ( !PasswordVerified ) return response.json({ success: false, message: "Login Failed" });
-
-    // Create unique session token
-    //const SessionToken = crypto.randomUUID({ disableEntropyCache: true});
+    if ( !PasswordVerified ) {
+      Log(`invalid password entered: username: ${Username} - entered password: ${Password}`);
+      return response.json({ success: false });
+    }
 
     // Return account and game data
+    Log(`Successful login: ${Username}`);
     response.json({ success: true, message: "Success", userid: User[0].id, username: User[0].username, classes: Classes, factions: Factions, races: Races, servers: Servers });
 
   } catch (error) {
-    Log(error);
-    response.json({ success: false, message: "Login Failed" });
+    Log(`Login error: ${error}`);
+    return response.json({ success: false });
   }
   
 });

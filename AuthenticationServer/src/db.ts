@@ -15,7 +15,7 @@ export default class Database {
       this.connection = await mysql.createConnection(this.credentials);
       Log('Database connection established...');
     } catch ( error ) {
-      
+      Log(error);
     }
   }
 

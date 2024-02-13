@@ -79,11 +79,11 @@ export interface NPCReset {
   npc_y: number;
 }
 
-export type WorkerMessageTypes =
-  | RegionDataTick
-  | NpcChangedTarget
-  | NPCStartMove
-  | NPCStopMove
-  | NPCRespawned
-  | NPCDied
-  | NPCReset;
+export interface NPCAttack {
+  type: string;
+  region: string;
+  npc_id: string;
+  target: string;
+}
+
+export type WorkerMessageTypes = RegionDataTick | NpcChangedTarget | NPCStartMove | NPCStopMove | NPCRespawned | NPCDied | NPCReset | NPCAttack;

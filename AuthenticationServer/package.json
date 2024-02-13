@@ -1,11 +1,10 @@
 {
   "name": "evereign-login-server",
-  "version": "0.4",
+  "version": "0.5",
   "description": "Evereign Login Server",
   "main": "server.js",
   "scripts": {
-    "start": "npx tsc && node --env-file=.env dist/server.js",
-    "build": "npx tsc"
+    "start": "npx tsc && node --env-file=.env dist/server.js"
   },
   "author": "Nathan Leadbitter",
   "license": "ISC",

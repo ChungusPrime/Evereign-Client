@@ -25,6 +25,6 @@ new Phaser.Game({
   dom: {
     createContainer: true
   },
-  pixelArt: true,
-  roundPixels: true
+  pixelArt: false,
+  roundPixels: false
 });

@@ -46,6 +46,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("quests-icon", Assets.QuestsIcon);
     this.load.image("social-icon", Assets.SocialIcon);
     this.load.spritesheet("characters", Assets.CharacterSprites, { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet("weapons", Assets.Weapons, { frameWidth: 32, frameHeight: 32 });
 
     // Tilemaps
     this.load.tilemapTiledJSON("D1", Assets.D1);
@@ -58,6 +59,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("Admurin_Outdoor_Recolour", Assets.Admurin_Outdoor_Recolour);
     this.load.image("Admurin_Indoor", Assets.Admurin_Indoor);
     this.load.image("Admurin_HouseBlocks", Assets.Admurin_HouseBlocks);
+
     this.load.image("RogueAdventure_Village", Assets.RogueAdventure_Village);
     this.load.image("RogueAdventure_Jungle_Extras", Assets.RogueAdventure_Jungle_Extras);
     this.load.image("RogueAdventure_Jungle", Assets.RogueAdventure_Jungle);
@@ -66,6 +68,13 @@ export default class Preload extends Phaser.Scene {
     this.load.image("RogueAdventure_Interior", Assets.RogueAdventure_Interior);
     this.load.image("RogueAdventure_Graveyard", Assets.RogueAdventure_Graveyard);
     this.load.image("RogueAdventure_tree03_s_01_animation", Assets.RogueAdventure_tree03_s_01_animation);
+    this.load.image("RogueAdventure_Water", Assets.RogueAdventure_Water);
+    this.load.image("RogueAdventure_Cavern", Assets.RogueAdventure_Cavern);
+    this.load.image("RogueAdventure_Crypt", Assets.RogueAdventure_Crypt);
+    this.load.image("RogueAdventure_Ruins", Assets.RogueAdventure_Ruins);
+    this.load.image("RogueAdventure_Village_Animations", Assets.RogueAdventure_Village_Animations);
+    this.load.image("RogueAdventure_Ship", Assets.RogueAdventure_Ship);
+    this.load.image("RogueAdventure_Wasteland", Assets.RogueAdventure_Wasteland);
 
     // Sounds
     this.load.audio("click", [Assets.Click]);

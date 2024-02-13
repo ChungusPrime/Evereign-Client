@@ -1,6 +1,11 @@
+import axios from "axios";
 import Menu from "../scenes/menu";
-import Button from "./button";
 import ModularButton from "./modular_button";
+
+interface GameServerResponse {
+  success: boolean;
+  characters: { id: string, name: string, level: string }[];
+}
 
 export default class ServerSelect extends Phaser.GameObjects.Container {
 
@@ -41,10 +46,44 @@ export default class ServerSelect extends Phaser.GameObjects.Container {
   UpdateList() {
     this.button_y = 0;
     this.scene.Servers.forEach(server => {
-      let button = new ModularButton(this.scene, 5, 5 + this.button_y, this.displayWidth - 10, 60, "Grey", `${server.name} - ${server.status} - ${server.players} Players`, this.scene.ConnectToGameServer.bind(this.scene, server.name, server.address), 0);
+      let button = new ModularButton(this.scene, 5, 5 + this.button_y, this.displayWidth - 10, 60, "Grey", `${server.name} - ${server.status} - ${server.players} Players`, this.ConnectToGameServer.bind(this, server.name, server.address), 0);
       this.add(button);
       this.button_y += button.button.getBottomCenter().y + 5;
     });
+  }
+
+  // Attempt to connect to the selected game server
+  async ConnectToGameServer ( server: string, address: string ): Promise<boolean> {
+
+    try {
+
+      console.log(server, address);
+
+      this.scene.ServerSelectPanel.setVisible(false);
+      this.scene.Message.setText(`Connecting to ${server}`).setVisible(true);
+      this.scene.Spinner.setVisible(true);
+
+      const response = await axios.post<GameServerResponse>(`${address}/status`, { id: this.scene.AccountID });
+
+      if ( response.data.success == true ) {
+        this.scene.Message.setText("Connected").setVisible(false);
+        this.scene.Spinner.setVisible(false);
+        this.scene.Server = address;
+        this.scene.ServerSelectPanel.setVisible(false);
+        this.scene.CharacterListPanel.UpdateList(response.data.characters);
+        this.scene.CharacterListPanel.setVisible(true);
+        this.scene.CharacterListPanel.Panel.show();
+        return true;
+      }
+
+      throw new Error("Could not connect to game server");
+      
+    } catch (error) {
+      this.scene.Message.setText("Could not connect to game server").setVisible(true);
+      this.scene.Spinner.setVisible(false);
+      this.scene.ServerSelectPanel.setVisible(true);
+    }
+
   }
   
 }

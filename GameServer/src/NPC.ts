@@ -1,6 +1,8 @@
+import Log from "./logger";
+
 export default class NPC {
 
-  // data from DB columns
+  // DB Schema
   id: number;
   name: string;
   title: string;
@@ -11,46 +13,50 @@ export default class NPC {
   x: number;
   y: number;
   speed: number;
-  vendor_items: string;
-  available_quests: string;
+  items: string;
+  quests: string;
   loot: string;
   region: string;
-  trainer: boolean = false;
+  trainer: boolean;
 
-  // data set manually
-  width: number = 8;
-  height: number = 16;
-
-  target: string = null;
-  status: string = "Alive";
-  moving: boolean = false;
-  in_combat: boolean = false;
-
-  body = null;
-
+  // Manual Data
   spawn_x: number;
   spawn_y: number;
-  current_health: number;
+  curHealth: number;
 
-  baseAggroRange: number = 50;
+  // Physics
+  width: number = 10;
+  height: number = 10;
+  body = null;
+
+  // States
+  ALIVE: boolean = true;
+  MOVING: boolean = false;
+  COMBAT: boolean = false;
+  TARGET: string = null;
+  
+  AggroRange: number = 50;
 
   // Time it takes to respawn after death
-  maxRespawnTime: number = 10000;
-  currentRespawnTime: number = 0;
+  RespawnTime: number = 10000;
+  curRespawnTime: number = 0;
 
   // Time it takes to reset after no damage is given or taken
-  maxResetTime: number = 6000;
-  currentResetTime: number = 0;
+  ResetTime: number = 6000;
+  curResetTime: number = 0;
 
   // Time it takes for this npc to attack again
-  maxAttackTime: number = 5000;
-  currentAttackTime: number = 0;
+  AttackTime: number = 3000;
+  curAttackTime: number = 0;
+
+  // All socket IDs that have attacked this NPC
+  AttackedBy: Array<string> = [];
 
   constructor ( data: NPC ) {
     Object.assign(this, data);
     this.spawn_x = this.x;
     this.spawn_y = this.y;
-    this.current_health = this.max_health;
+    this.curHealth = this.max_health;
   }
 
   UpdatePosition () {
@@ -59,54 +65,87 @@ export default class NPC {
   }
 
   ChangeTarget ( target: string ) {
-    this.target = target;
-    this.currentResetTime = 0;
-    this.in_combat = true;
-    console.log(`${this.id} changed target to socket: ${this.target}`);
+    this.TARGET = target;
+    this.COMBAT = true;
+    this.curRespawnTime = 0;
+    Log(`NPC: ${this.id} changed target to ${this.TARGET}`);
   }
 
-  TryRespawn ( delta: number ): Boolean {
-    this.currentRespawnTime += delta;
-    if ( this.currentRespawnTime >= this.maxRespawnTime ) {
-      this.ResetToDefault();
+  CanRespawn ( delta: number ): boolean {
+    this.curRespawnTime += delta;
+    if ( this.curRespawnTime >= this.RespawnTime ) {
       return true;
     }
     return false;
   }
 
-  TryReset ( delta: number ): Boolean {
-    this.currentResetTime += delta;
-    if ( this.currentResetTime >= this.maxResetTime ) {
-      this.ResetToDefault();
+  Respawn () {
+    this.Reset();
+    Log(`NPC: ${this.id} respawned`);
+  }
+
+  CanReset ( delta: number ): Boolean {
+    this.curResetTime += delta;
+    if ( this.curResetTime >= this.ResetTime ) {
       return true;
     }
     return false;
   }
 
-  ResetToDefault () {
-    this.status = "Alive";
-    this.currentRespawnTime = 0;
-    this.currentResetTime = 0;
-    this.moving = false;
-    this.current_health = this.max_health;
-    this.target = null;
-    this.in_combat = false;
+  Reset () {
+    this.ALIVE = true;
+    this.MOVING = false;
+    this.COMBAT = false;
+    this.TARGET = null;
+    this.curRespawnTime = 0;
+    this.curResetTime = 0;
+    this.curHealth = this.max_health;
     this.body.reset(this.spawn_x, this.spawn_y);
     this.body.x = this.spawn_x;
     this.body.y = this.spawn_y;
     this.UpdatePosition();
+    Log(`NPC: ${this.id} reset`);
   }
 
-  Die () {
-    this.status = "Dead";
-    this.currentRespawnTime = 0;
-    this.currentResetTime = 0;
-    this.target = null;
-    this.current_health = 0;
-    this.moving = false;
-    this.in_combat = false;
+  CanAttack ( delta: number ): boolean {
+    this.curAttackTime += delta;
+    if ( this.curAttackTime >= this.curAttackTime ) {
+      return true;
+    }
+    return false;
+  }
+
+  AttackTarget() {
+    this.curAttackTime = 0;
+    this.curResetTime = 0;
+    Log(`NPC: ${this.id} attacked player ${this.TARGET}`);
+  }
+
+  Kill () {
+    this.ALIVE = false;
+    this.MOVING = false;
+    this.COMBAT = false;
+    this.TARGET = null;
+    this.curRespawnTime = 0;
+    this.curResetTime = 0;
+    this.curHealth = 0;
     this.body.reset(this.body.x, this.body.y);
     this.UpdatePosition();
+    Log(`NPC: ${this.id} died`);
+  }
+
+  StartMoving () {
+    this.MOVING = true;
+    Log(`NPC: ${this.id} started moving`);
+  }
+
+  StopMoving () {
+    this.MOVING = false;
+    this.body.reset(this.body.x, this.body.y);
+    this.UpdatePosition();
+    this.curHealth = 0;
+    this.curResetTime = 0;
+    Log(`NPC: ${this.id} stopped moving`);
   }
 
 }
