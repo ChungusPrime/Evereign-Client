@@ -1,0 +1,49 @@
+{
+  "name": "evereign",
+  "version": "1.0.0",
+  "description": "Evereign Client",
+  "main": "main.js",
+  "scripts": {
+    "dev": "webpack --config webpack.config.js --mode=development --watch",
+    "prod": "webpack --config webpack.config.js --mode=production",
+    "build": "npm run prod && electron-builder"
+  },
+  "author": "Nathan Leadbitter",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "phaser": "^3.80.0",
+    "socket.io-client": "^4.7.1"
+  },
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "electron": "^28.1.4",
+    "electron-builder": "^24.9.1",
+    "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "sass": "^1.69.4",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "build": {
+    "appId": "com.chungco.evereign",
+    "directories": {
+      "output": "build",
+      "buildResources": "dist"
+    },
+    "win": {
+      "target": "portable"
+    },
+    "files": [
+      "**/*",
+      "dist/**/*",
+      "!.github",
+      "!.vs",
+      "!node_modules/*"
+    ]
+  }
+}
