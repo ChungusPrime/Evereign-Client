@@ -1,6 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-/node_modules
-/build
-/dist
+build
+node_modules
+dist
