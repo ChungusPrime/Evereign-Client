@@ -1,19 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-/Client/node_modules
-/Client/build
-/Client/dist
-
-/AuthenticationServer/node_modules
-/AuthenticationServer/dist
-
-/GameServer/node_modules
-/GameServer/dist
-
-*.env
-*/ecosystem.config.js
-
-log.txt
-*/logs
-
+/node_modules
+/build
+/dist
