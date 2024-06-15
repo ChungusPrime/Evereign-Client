@@ -1,0 +1,464 @@
+[
+    {
+        "id": 1,
+        "name": "Forestry",
+        "type": "Trade",
+        "description": "Gather wood from trees, process by-products such as resin or sap. Identify tree types, use appropriate tools, and practice sustainable harvesting. Access to high-quality timber, materials for woodworking, and potential knowledge of rare flora."
+    },
+    {
+        "id": 2,
+        "name": "Weaponsmithing",
+        "type": "Trade",
+        "description": "Craft weapons from various metals, including swords, axes, and more. Learn metallurgy, forging techniques, and weapon design. Ability to create powerful and unique weapons, potential for special effects or enhancements."
+    },
+    {
+        "id": 3,
+        "name": "Woodworking",
+        "type": "Trade",
+        "description": "Craft equipment and materials from raw wood, including weapons, tools and furniture. Master woodworking tools, understand wood properties, and practice precision. Create durable and aesthetically pleasing wooden items, potential for unique designs."
+    },
+    {
+        "id": 4,
+        "name": "Armoursmithing",
+        "type": "Trade",
+        "description": "Craft armor from metals, providing protection in battle. Learn metalworking, armor design, and forging techniques. Create sturdy and effective armor sets with various resistances."
+    },
+    {
+        "id": 5,
+        "name": "Leatherworking",
+        "type": "Trade",
+        "description": "Craft armor from animal skins, emphasizing flexibility and lightness. Learn tanning, stitching, and animal anatomy. Produce lightweight, agile armor sets with natural resistances."
+    },
+    {
+        "id": 6,
+        "name": "Enchanting",
+        "type": "Trade",
+        "description": "Create consumable spell scrolls and imbue items with magical effects. Study magical theory, practice spellcasting, and understand enchantment rituals. Enhance weapons, armor, and accessories with magical properties."
+    },
+    {
+        "id": 7,
+        "name": "Tailoring",
+        "type": "Trade",
+        "description": "Process plant materials and create armor from them, focusing on magical properties. Learn weaving techniques, understand magical fibers, and practice precision. Craft enchanted cloth armor with unique magical attributes."
+    },
+    {
+        "id": 8,
+        "name": "Engineering",
+        "type": "Trade",
+        "description": "Create gadgets and electronics for various purposes. Study mechanics, electrical engineering, and inventiveness. Access to advanced technology, creation of unique devices."
+    },
+    {
+        "id": 9,
+        "name": "Alchemy",
+        "type": "Trade",
+        "description": "Create potions from plant materials, providing various effects. Understand herb properties, practice potion brewing, and master potion recipes. Brew health, mana, and other beneficial potions."
+    },
+    {
+        "id": 10,
+        "name": "Researching",
+        "type": "Trade",
+        "description": "Discover hidden properties, add gem slots, improve blueprint quality and unlock item component improvements. Conduct experiments, study ancient texts, and explore magical theories. Improve and customize equipment, unlocking hidden potentials."
+    },
+    {
+        "id": 11,
+        "name": "Herbalism",
+        "type": "Trade",
+        "description": "Gather plants for alchemy, including rare and magical herbs. Recognize plants, understand ecosystems, and practice sustainable harvesting. Access to rare alchemical ingredients and increased potion potency."
+    },
+    {
+        "id": 12,
+        "name": "Fishing",
+        "type": "Trade",
+        "description": "Gather fish for cooking, including rare and exotic species. Master various fishing techniques, understand aquatic ecosystems. Obtain unique ingredients for cooking, potentially discover valuable lost items."
+    },
+    {
+        "id": 13,
+        "name": "Cooking",
+        "type": "Trade",
+        "description": "Cook various foods that provide bonuses when eaten. Learn culinary techniques, experiment with recipes, and understand nutritional properties. Prepare meals that grant temporary buffs or provide healing."
+    },
+    {
+        "id": 14,
+        "name": "Jewelleler",
+        "type": "Trade",
+        "description": "Cut gems and create jewelry with magical properties. Master gem-cutting techniques, understand magical gem properties. Craft jewelry that enhances magical abilities or provides resistances."
+    },
+    {
+        "id": 15,
+        "name": "Mining",
+        "type": "Trade",
+        "description": "Gather raw metals from deposits, including rare and precious ores. Use mining tools, identify mineral deposits, and practice sustainable extraction. Access to valuable metals, potential for rare gem discoveries."
+    },
+    {
+        "id": 16,
+        "name": "Salvaging",
+        "type": "Trade",
+        "description": "Break down items for materials and process abandoned wreck and buildings in the world. Understand material composition, practice deconstruction techniques. Recover valuable resources from old equipment and structures."
+    },
+    {
+        "id": 17,
+        "name": "Medicine",
+        "type": "Trade",
+        "description": "Create items that restore health, including potions and salves. Study herbal medicine, learn alchemical healing properties. Craft potent healing items, potentially cure ailments."
+    },
+    {
+        "id": 18,
+        "name": "Mercantile",
+        "type": "Trade",
+        "description": "Buy and sell items, on the market and with NPCs. Understand market dynamics, practice negotiation skills. Access to better deals, potential discounts, and increased profits."
+    },
+    {
+        "id": 19,
+        "name": "Lockpicking",
+        "type": "Trade",
+        "description": "Open locks, bypass security measures. Learn lock mechanisms, practice precision and stealth. Unlock hidden areas, gain access to valuable loot, and potentially disarm traps."
+    },
+    {
+        "id": 20,
+        "name": "Smelting",
+        "type": "Trade",
+        "description": null
+    },
+    {
+        "id": 21,
+        "name": "Skinning",
+        "type": "Trade",
+        "description": null
+    },
+    {
+        "id": 22,
+        "name": "Swords",
+        "type": "Melee",
+        "description": null
+    },
+    {
+        "id": 23,
+        "name": "Maces",
+        "type": "Melee",
+        "description": null
+    },
+    {
+        "id": 24,
+        "name": "Axes",
+        "type": "Melee",
+        "description": null
+    },
+    {
+        "id": 25,
+        "name": "Hammers",
+        "type": "Melee",
+        "description": null
+    },
+    {
+        "id": 26,
+        "name": "Rapiers",
+        "type": "Melee",
+        "description": null
+    },
+    {
+        "id": 27,
+        "name": "Daggers",
+        "type": "Melee",
+        "description": null
+    },
+    {
+        "id": 28,
+        "name": "Spears",
+        "type": "Melee",
+        "description": null
+    },
+    {
+        "id": 29,
+        "name": "Staffs",
+        "type": "Melee",
+        "description": null
+    },
+    {
+        "id": 30,
+        "name": "Dual Wielding",
+        "type": "Special",
+        "description": null
+    },
+    {
+        "id": 31,
+        "name": "Greatweapons",
+        "type": "Special",
+        "description": null
+    },
+    {
+        "id": 32,
+        "name": "Pistols",
+        "type": "Ranged",
+        "description": null
+    },
+    {
+        "id": 33,
+        "name": "Rifles",
+        "type": "Ranged",
+        "description": null
+    },
+    {
+        "id": 34,
+        "name": "Bows",
+        "type": "Ranged",
+        "description": null
+    },
+    {
+        "id": 35,
+        "name": "Crossbows",
+        "type": "Ranged",
+        "description": null
+    },
+    {
+        "id": 36,
+        "name": "Throwing",
+        "type": "Ranged",
+        "description": null
+    },
+    {
+        "id": 37,
+        "name": "Heavy Armour",
+        "type": "Defensive",
+        "description": null
+    },
+    {
+        "id": 38,
+        "name": "Medium Armour",
+        "type": "Defensive",
+        "description": null
+    },
+    {
+        "id": 39,
+        "name": "Light Armour",
+        "type": "Defensive",
+        "description": null
+    },
+    {
+        "id": 40,
+        "name": "Shields",
+        "type": "Defensive",
+        "description": null
+    },
+    {
+        "id": 41,
+        "name": "Parry",
+        "type": "Defensive",
+        "description": null
+    },
+    {
+        "id": 42,
+        "name": "Block",
+        "type": "Defensive",
+        "description": null
+    },
+    {
+        "id": 43,
+        "name": "Dodge",
+        "type": "Defensive",
+        "description": null
+    },
+    {
+        "id": 44,
+        "name": "Fire",
+        "type": "Magic",
+        "description": "Associated with flames, heat, combustion, and destruction"
+    },
+    {
+        "id": 45,
+        "name": "Air",
+        "type": "Magic",
+        "description": "Associated with gases, wind, atmosphere, and breath"
+    },
+    {
+        "id": 46,
+        "name": "Water",
+        "type": "Magic",
+        "description": "Associated with liquid, oceans, rivers, rain, and fluidity"
+    },
+    {
+        "id": 47,
+        "name": "Nature",
+        "type": "Magic",
+        "description": "Associated with flora, fauna, ecosystems, and natural balance"
+    },
+    {
+        "id": 49,
+        "name": "Arcane",
+        "type": "Magic",
+        "description": "Associated with magic, mysticism, and the unseen forces of the universe"
+    },
+    {
+        "id": 50,
+        "name": "Meta",
+        "type": "Magic",
+        "description": null
+    },
+    {
+        "id": 51,
+        "name": "Corrupt",
+        "type": "Magic",
+        "description": null
+    },
+    {
+        "id": 52,
+        "name": "Blood",
+        "type": "Magic",
+        "description": "Associated with life force, sacrifice, vitality, and ancestral power"
+    },
+    {
+        "id": 53,
+        "name": "Siphon",
+        "type": "Magic",
+        "description": null
+    },
+    {
+        "id": 54,
+        "name": "Affliction",
+        "type": "Magic",
+        "description": null
+    },
+    {
+        "id": 55,
+        "name": "Divine",
+        "type": "Magic",
+        "description": "Associated with gods, divine beings, miracles, and divine intervention"
+    },
+    {
+        "id": 56,
+        "name": "Earth",
+        "type": "Magic",
+        "description": "Associated with the ground, soil, rocks, and geological forces"
+    },
+    {
+        "id": 57,
+        "name": "Ice",
+        "type": "Magic",
+        "description": "Associated with freezing temperatures, glaciers, frost, and preservation"
+    },
+    {
+        "id": 58,
+        "name": "Electricity",
+        "type": "Magic",
+        "description": "Associated with lightning, energy, sparks, and electrical currents"
+    },
+    {
+        "id": 59,
+        "name": "Death",
+        "type": "Magic",
+        "description": "Associated with mortality, decay, the afterlife, and necromancy"
+    },
+    {
+        "id": 60,
+        "name": "Life",
+        "type": "Magic",
+        "description": "Associated with vitality, growth, renewal, and healing"
+    },
+    {
+        "id": 61,
+        "name": "Light",
+        "type": "Magic",
+        "description": "Associated with illumination, purity, enlightenment, and divine power"
+    },
+    {
+        "id": 62,
+        "name": "Darkness",
+        "type": "Magic",
+        "description": "Associated with shadows, obscurity, night, and malevolent forces"
+    },
+    {
+        "id": 63,
+        "name": "Time",
+        "type": "Magic",
+        "description": "Associated with the passage of time, chronomancy, and temporal manipulation"
+    },
+    {
+        "id": 64,
+        "name": "Space",
+        "type": "Magic",
+        "description": "Associated with the cosmos, stars, galaxies, and astral planes"
+    },
+    {
+        "id": 65,
+        "name": "Spirit",
+        "type": "Magic",
+        "description": "Associated with ethereal entities, souls, ghosts, and spiritual energy"
+    },
+    {
+        "id": 66,
+        "name": "Chaos",
+        "type": "Magic",
+        "description": "Associated with disorder, randomness, unpredictability, and entropy"
+    },
+    {
+        "id": 67,
+        "name": "Order",
+        "type": "Magic",
+        "description": "Associated with structure, organization, logic, and stability"
+    },
+    {
+        "id": 68,
+        "name": "Sound",
+        "type": "Magic",
+        "description": "Associated with vibrations, resonance, music, and sonic manipulation"
+    },
+    {
+        "id": 69,
+        "name": "Metal",
+        "type": "Magic",
+        "description": "Associated with minerals, alloys, craftsmanship, and industrialization"
+    },
+    {
+        "id": 70,
+        "name": "Wood",
+        "type": "Magic",
+        "description": "Associated with trees, forests, growth, and natural materials"
+    },
+    {
+        "id": 71,
+        "name": "Shadow",
+        "type": "Magic",
+        "description": "Associated with darkness, stealth, concealment, and manipulation"
+    },
+    {
+        "id": 72,
+        "name": "Dream",
+        "type": "Magic",
+        "description": "Associated with the subconscious mind, illusions, and alternate realities"
+    },
+    {
+        "id": 73,
+        "name": "Psychic",
+        "type": "Magic",
+        "description": "Associated with mental abilities, telepathy, telekinesis, and perception"
+    },
+    {
+        "id": 74,
+        "name": "Fate",
+        "type": "Magic",
+        "description": "Associated with destiny, prophecy, fortune, and predestination"
+    },
+    {
+        "id": 75,
+        "name": "Dream",
+        "type": "Magic",
+        "description": "Associated with dreams, imagination, creativity, and inspiration"
+    },
+    {
+        "id": 76,
+        "name": "Celestial",
+        "type": "Magic",
+        "description": "Associated with celestial bodies, stars, constellations, and cosmic energies"
+    },
+    {
+        "id": 77,
+        "name": "Infernal",
+        "type": "Magic",
+        "description": "Associated with hellish realms, demons, infernos, and damnation"
+    },
+    {
+        "id": 78,
+        "name": "Void",
+        "type": "Magic",
+        "description": "Associated with emptiness, nothingness, oblivion, and the absence of existence"
+    }
+]

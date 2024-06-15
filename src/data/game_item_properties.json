@@ -1,0 +1,167 @@
+[
+    {
+        "id": 1,
+        "name": "One-Hand",
+        "description": null
+    },
+    {
+        "id": 2,
+        "name": "Two-Hand",
+        "description": null
+    },
+    {
+        "id": 3,
+        "name": "Light",
+        "description": null
+    },
+    {
+        "id": 4,
+        "name": "Heavy",
+        "description": null
+    },
+    {
+        "id": 5,
+        "name": "Medium",
+        "description": null
+    },
+    {
+        "id": 6,
+        "name": "Weapon",
+        "description": null
+    },
+    {
+        "id": 7,
+        "name": "Armour",
+        "description": null
+    },
+    {
+        "id": 8,
+        "name": "Dagger",
+        "description": null
+    },
+    {
+        "id": 9,
+        "name": "Sword",
+        "description": null
+    },
+    {
+        "id": 10,
+        "name": "Greatsword",
+        "description": null
+    },
+    {
+        "id": 11,
+        "name": "Shield",
+        "description": null
+    },
+    {
+        "id": 12,
+        "name": "Bow",
+        "description": null
+    },
+    {
+        "id": 13,
+        "name": "Head",
+        "description": null
+    },
+    {
+        "id": 14,
+        "name": "Consumable",
+        "description": null
+    },
+    {
+        "id": 15,
+        "name": "Food",
+        "description": null
+    },
+    {
+        "id": 16,
+        "name": "Potion",
+        "description": null
+    },
+    {
+        "id": 17,
+        "name": "Chest",
+        "description": null
+    },
+    {
+        "id": 18,
+        "name": "Hands",
+        "description": null
+    },
+    {
+        "id": 19,
+        "name": "Legs",
+        "description": null
+    },
+    {
+        "id": 20,
+        "name": "Pickaxe",
+        "description": null
+    },
+    {
+        "id": 21,
+        "name": "Fishing Rod",
+        "description": null
+    },
+    {
+        "id": 22,
+        "name": "Hatchet",
+        "description": null
+    },
+    {
+        "id": 23,
+        "name": "Ammo",
+        "description": null
+    },
+    {
+        "id": 24,
+        "name": "Arrow",
+        "description": null
+    },
+    {
+        "id": 25,
+        "name": "Bullet",
+        "description": null
+    },
+    {
+        "id": 26,
+        "name": "Feet",
+        "description": null
+    },
+    {
+        "id": 27,
+        "name": "Quest",
+        "description": null
+    },
+    {
+        "id": 28,
+        "name": "Letter",
+        "description": null
+    },
+    {
+        "id": 29,
+        "name": "Ranged",
+        "description": null
+    },
+    {
+        "id": 30,
+        "name": "Melee",
+        "description": null
+    },
+    {
+        "id": 31,
+        "name": "Module",
+        "description": "Unique to Automatons"
+    },
+    {
+        "id": 32,
+        "name": "Pistol",
+        "description": null
+    },
+    {
+        "id": 33,
+        "name": "Rifle",
+        "description": null
+    }
+]

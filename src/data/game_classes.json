@@ -1,0 +1,232 @@
+[
+    {
+        "id": 1,
+        "name": "Soldier",
+        "description": "Banished from the army for \"excessive violence\", this soldier now seeks to prove themselves (and make a living) in other ways.",
+        "traits": "[1,14,17,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":2,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3},{\"item\":4,\"quantity\":1}]",
+        "resource": "1",
+        "skills": "[22,40,38]"
+    },
+    {
+        "id": 2,
+        "name": "Godsworn",
+        "description": "A blessed warrior, pure in the eyes of the gods, seeks to purify the land",
+        "traits": "[5,18,17]",
+        "attributes": "{\"Strength\":5,\"Intelligence\":5,\"Willpower\":3,\"Endurance\":2,\"Agility\":1,\"Personality\":4}",
+        "equipment": "[{\"item\":25,\"quantity\":1},{\"item\":4,\"quantity\":1},{\"item\":22,\"quantity\":1},{\"item\":15,\"quantity\":2},{\"item\":24,\"quantity\":2},{\"item\":23,\"quantity\":1}]",
+        "resource": "2",
+        "skills": "[39,40,23]"
+    },
+    {
+        "id": 3,
+        "name": "Operative",
+        "description": "The Operative is a master of stealth and subterfuge, skilled at striking from the shadows or taking down targets up close with poisons.",
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 4,
+        "name": "Arcanist",
+        "description": "The Arcanist is a mage who draws upon the powers of light and life to dispatch their foes.",
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 5,
+        "name": "Harbinger",
+        "description": "The Harbinger is a dark mage who uses the powers of necromancy and blood magic to bring ruin to their foes.",
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 6,
+        "name": "Praetorian",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 7,
+        "name": "Stalwart",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 8,
+        "name": "Spellblade",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 9,
+        "name": "Champion",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 10,
+        "name": "Captain",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 11,
+        "name": "Forsaken",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 12,
+        "name": "Mender",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 13,
+        "name": "Ascended",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 14,
+        "name": "Marksman",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 15,
+        "name": "Agent",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 16,
+        "name": "Physician",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 17,
+        "name": "Engineer",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 18,
+        "name": "Corruptor",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 19,
+        "name": "Deathless",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 20,
+        "name": "Siphoner",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 21,
+        "name": "Lifebringer",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 22,
+        "name": "Elementalist",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    },
+    {
+        "id": 23,
+        "name": "Battlemage",
+        "description": null,
+        "traits": "[1,14,15,16]",
+        "attributes": "{\"Strength\":8,\"Intelligence\":2,\"Willpower\":3,\"Endurance\":5,\"Agility\":3,\"Personality\":1}",
+        "equipment": "[{\"item\":13,\"quantity\":1},{\"item\":14,\"quantity\":1},{\"item\":15,\"quantity\":3},{\"item\":16,\"quantity\":3}]",
+        "resource": "1",
+        "skills": "[22,31,38]"
+    }
+]

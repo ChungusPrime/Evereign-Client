@@ -1,0 +1,110 @@
+[
+    {
+        "id": 1,
+        "name": "Sword Training",
+        "requirements": "[\r   {\r     \"attribute\": \"strength\",\r     \"value\": 8\r   }\r ]",
+        "description": "Allows use of Sword type weapons"
+    },
+    {
+        "id": 2,
+        "name": "Sword Proficiency",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":10},{\"skill\":\"Swords\",\"value\":100}]",
+        "description": "+1 damage with swords"
+    },
+    {
+        "id": 3,
+        "name": "Sword Expert",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":12},{\"skill\":\"Swords\",\"value\":250}]",
+        "description": "+3 damage with swords"
+    },
+    {
+        "id": 4,
+        "name": "Sword Master",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":14},{\"skill\":\"Swords\",\"value\":500}]",
+        "description": "+5 damage with swords"
+    },
+    {
+        "id": 5,
+        "name": "Mace Training",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":5}]",
+        "description": "Allows use of Mace type weapons"
+    },
+    {
+        "id": 6,
+        "name": "Mace Proficiency",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":6},{\"skill\":\"Maces\",\"value\":100}]",
+        "description": "+1 damage with maces"
+    },
+    {
+        "id": 7,
+        "name": "Mace Expert",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":7},{\"skill\":\"Maces\",\"value\":250}]",
+        "description": "+3 damage with maces"
+    },
+    {
+        "id": 8,
+        "name": "Mace Master",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":8},{\"skill\":\"Maces\",\"value\":500}]",
+        "description": "+5 damage with maces"
+    },
+    {
+        "id": 9,
+        "name": "Bow Training",
+        "requirements": "[{\"attribute\":\"agility\",\"value\":5}]",
+        "description": "Allows use of Bow type weapons"
+    },
+    {
+        "id": 10,
+        "name": "Bow Proficiency",
+        "requirements": "[\n  {\n    \"attribute\": \"agility\",\n    \"value\": 5\n  },\n  {\n    \"skill\": \"Bows\",\n    \"value\": 100\n  }\n]",
+        "description": ""
+    },
+    {
+        "id": 11,
+        "name": "Bow Expert",
+        "requirements": "[{\"attribute\":\"agility\",\"value\":5}]",
+        "description": ""
+    },
+    {
+        "id": 12,
+        "name": "Bow Master",
+        "requirements": "[{\"attribute\":\"agility\",\"value\":5}]",
+        "description": ""
+    },
+    {
+        "id": 13,
+        "name": "Forestry Efficiency",
+        "requirements": "[{\"race\":\"human\"}]",
+        "description": "Increased wood gathered from trees, Decreased time taken to gather wood from trees"
+    },
+    {
+        "id": 14,
+        "name": "Medium Armour Training",
+        "requirements": "[{\"attribute\":\"endurance\",\"value\":5}]",
+        "description": "Allows use of light armour"
+    },
+    {
+        "id": 15,
+        "name": "Great Weapons Training",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":6}]",
+        "description": "Allows use of greatweapons"
+    },
+    {
+        "id": 16,
+        "name": "War Veteran",
+        "requirements": "[{\"class\":\"Soldier\"}]",
+        "description": null
+    },
+    {
+        "id": 17,
+        "name": "Shield Training",
+        "requirements": "[{\"attribute\":\"strength\",\"value\":6}]",
+        "description": "Allows use of shields"
+    },
+    {
+        "id": 18,
+        "name": "Light Armour Training",
+        "requirements": "[{\"attribute\":\"agility\",\"value\":5}]",
+        "description": "Allows use of light armour"
+    }
+]

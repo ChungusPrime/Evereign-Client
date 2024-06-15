@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Strength",
+        "description": "A measure of a characters raw physical strength\n- Determines strength of melee attacks\n- Determines Carry capacity\n- Ability to resist physical attacks\n- Modifier for physical abilities\n \nGoverns the following trade skills:\n- Weaponsmithing\n- Armoursmithing\n- Mining\n- Forestry"
+    },
+    {
+        "id": 2,
+        "name": "Intelligence",
+        "description": "- Determines resource pool size"
+    },
+    {
+        "id": 3,
+        "name": "Willpower",
+        "description": "- Ability to Resist magical attacks"
+    },
+    {
+        "id": 4,
+        "name": "Agility",
+        "description": "        - Increases critical hit chance\n        - Increases accuracy"
+    },
+    {
+        "id": 5,
+        "name": "Endurance",
+        "description": "        - Determines health points\n        - Ability to resist bleeding and poison effects"
+    },
+    {
+        "id": 6,
+        "name": "Personality",
+        "description": "        - Improves quest rewards\n        - Improves prices with traders"
+    }
+]

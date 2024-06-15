@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "name": "Skyhaven",
+        "address": "http://localhost:8082",
+        "players": "0",
+        "status": "Offline",
+        "type": "local"
+    }
+]

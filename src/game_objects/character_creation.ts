@@ -2,7 +2,7 @@ import axios from "axios";
 import Menu from "../scenes/menu";
 import Button from "./button";
 import Text from "./text";
-import ModularButton from "./modular_button";
+import ModularButton from "./ModularButton";
 
 export default class CharacterCreation extends Phaser.GameObjects.Container {
 
@@ -19,11 +19,6 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
   RaceSelectionScreen: Phaser.GameObjects.Container;
   RaceScreenHeader: Phaser.GameObjects.Text;
   RaceOptionsList: Phaser.GameObjects.Rectangle;
-
-  // Faction
-  FactionSelectionScreen: Phaser.GameObjects.Container;
-  FactionScreenHeader: Phaser.GameObjects.Text;
-  FactionOptionsList: Phaser.GameObjects.Rectangle;
 
   // Attributes
   AttributePoints: number;
@@ -100,11 +95,6 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
     this.RaceOptionsList = scene.add.rectangle(this.scene.scale.width * 0.1, this.scene.scale.height * 0.1, this.scene.scale.width * 0.4, this.scene.scale.height * 0.8, 0x000000, 0.8).setOrigin(0).setStrokeStyle(2, 0xffffff, 1);
     this.RaceSelectionScreen = scene.add.container(0, 0).add([ this.RaceOptionsList, this.RaceScreenHeader ]).setVisible(false);
 
-    // Create Faction Selection Screen;
-    this.FactionScreenHeader = scene.add.text(this.scene.scale.width * 0.1 + 10, this.scene.scale.height * 0.1 + 10, "Choose Faction", { align: "center", fontSize: "36px", fontFamily: "Mooli"  }).setOrigin(0);
-    this.FactionOptionsList = scene.add.rectangle(this.scene.scale.width * 0.1, this.scene.scale.height * 0.1, this.scene.scale.width * 0.4, this.scene.scale.height * 0.8, 0x000000, 0.8).setOrigin(0).setStrokeStyle(2, 0xffffff, 1);
-    this.FactionSelectionScreen = scene.add.container(0, 0).add([ this.FactionOptionsList, this.FactionScreenHeader ]).setVisible(false);
-
     // Attribute Assignment Screen;
     this.AttributeHeader = scene.add.text(10, 10, "Assign Attribute Points", { align: "center", fontSize: "36px", fontFamily: "Mooli"  }).setOrigin(0);
     this.AttributePointsRemainingText = scene.add.text(this.scene.scale.width * 0.1 + 10, this.AttributeHeader.getBottomCenter().y + 10, `Points Left: ${this.AttributePoints}`, { align: "center", fontSize: "20px", fontFamily: "Mooli" }).setOrigin(0);
@@ -168,7 +158,6 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
 
     this.add([
       this.ClassSelectionScreen,
-      this.FactionSelectionScreen,
       this.RaceSelectionScreen,
       this.AttributeAssignmentScreen,
       this.OptionDescriptionBackground,
@@ -211,8 +200,7 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
   setOptions () {
 
     let ClassY = this.ClassScreenHeader.getBottomCenter().y + 5;
-
-    this.scene.Classes.forEach(v => {
+    /*this.scene.Classes.forEach(v => {
       const text = new Text(this.scene, this.scene.scale.width * 0.1 + 10, ClassY, v.name, 24, false);
       text.on('pointerdown', () => {
         this.character.class = v.name;
@@ -220,10 +208,10 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
       });
       this.ClassSelectionScreen.add(text);
       ClassY += 30;
-    });
+    });*/
 
     let RaceY = this.RaceScreenHeader.getBottomCenter().y + 5;
-    this.scene.Races.forEach(v => {
+    /*this.scene.Races.forEach(v => {
       const text = new Text(this.scene, this.scene.scale.width * 0.1 + 10, RaceY, v.name, 24, false);
       text.on('pointerdown', () => {
         this.character.race = v.name;
@@ -231,18 +219,7 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
       });
       this.RaceSelectionScreen.add(text);
       RaceY += 30;
-    });
-
-    let FactionY = this.FactionScreenHeader.getBottomCenter().y + 5;
-    this.scene.Factions.forEach(v => {
-      const text = new Text(this.scene, this.scene.scale.width * 0.1 + 10, FactionY, v.name, 24, false);
-      text.on('pointerdown', () => {
-        this.character.faction = v.name;
-        this.OptionDescriptionText.setText(v.description);
-      });
-      this.FactionSelectionScreen.add(text);
-      FactionY += 30;
-    });
+    });*/
 
   }
 
@@ -262,7 +239,7 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
 
   GoToNextStep () {
     this.step++;
-    if ( this.step >= 4 ) this.step = 4;
+    if ( this.step >= 3 ) this.step = 3;
     this.ShowActiveStep();
   }
 
@@ -274,20 +251,18 @@ export default class CharacterCreation extends Phaser.GameObjects.Container {
 
   ShowActiveStep () {
     this.ClassSelectionScreen.setVisible(false);
-    this.FactionSelectionScreen.setVisible(false);
     this.RaceSelectionScreen.setVisible(false);
     this.AttributeAssignmentScreen.setVisible(false);
     switch( this.step ) {
       case 1: this.ClassSelectionScreen.setVisible(true); break;
-      case 2: this.FactionSelectionScreen.setVisible(true); break;
-      case 3: this.RaceSelectionScreen.setVisible(true); break;
-      case 4: this.AttributeAssignmentScreen.setVisible(true); break;
+      case 2: this.RaceSelectionScreen.setVisible(true); break;
+      case 3: this.AttributeAssignmentScreen.setVisible(true); break;
     }
   }
 
   CancelCharacterCreation () {
     this.scene.CharacterListPanel.setVisible(true);
-    this.scene.CharacterCreationPanel.setVisible(false);
+    //this.scene.CharacterCreationPanel.setVisible(false);
   }
 
 }

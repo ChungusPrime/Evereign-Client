@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "name": "Adrenaline",
+        "description": "Build up by using weaker abilities, consume to use more powerful ones."
+    },
+    {
+        "id": 2,
+        "name": "Fervour",
+        "description": "Smiting foes and saving allies pleases the gods, filling you with divine fervour. Use this to cast more powerful abilities."
+    }
+]

@@ -20,15 +20,18 @@ module.exports = {
             },
             {
                 test: /\.json$/i,
-                exclude: [path.resolve(__dirname, 'AbilityData.json'), path.resolve(__dirname, 'ItemData.json')],
+                exclude: [
+                    path.resolve(__dirname, 'game_classes.json'),
+                    path.resolve(__dirname, 'game_races.json')
+                ],
                 type: 'asset/resource',
             },
             {
-                test: /AbilityData\.json$/,
+                test: /game_classes\.json$/,
                 type: 'asset/source',
             },
             {
-                test: /ItemData\.json$/,
+                test: /game_races\.json$/,
                 type: 'asset/source',
             },
             {

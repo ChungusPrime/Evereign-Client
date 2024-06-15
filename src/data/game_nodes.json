@@ -1,0 +1,10 @@
+[
+    {
+        "id": 174,
+        "region": "D1",
+        "type": "Oak Tree",
+        "respawn_time": "10000",
+        "resources": "[{\"type\":\"oak\",\"amount\":100}]",
+        "status": "active"
+    }
+]

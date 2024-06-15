@@ -1,6 +1,6 @@
 import axios from "axios";
 import Menu from "../scenes/menu";
-import ModularButton from "./modular_button";
+import ModularButton from "./ModularButton";
 import Panel from "./panel";
 
 export default class Registration extends Panel {
@@ -39,7 +39,7 @@ export default class Registration extends Panel {
 
   ShowLoginForm () {
     this.setVisible(false);
-    this.scene.LoginPanel.setVisible(true);
+    this.scene.LoginPanel.Container.setVisible(true);
   }
 
   async AttemptRegistration (): Promise<boolean> {
@@ -51,7 +51,7 @@ export default class Registration extends Panel {
       this.scene.Message.setText("Attempting create your account").setVisible(true);
       this.scene.Spinner.setVisible(true);
 
-      const result = await axios.post<RegisterResponse>(`${this.scene.AuthServerAddress}/create_account`, { 
+      const result = await axios.post<RegisterResponse>(`${this.scene.DataServerAddress}/create_account`, { 
         username: this.UsernameInput.value,
         password: this.PasswordInput.value,
         email: this.EmailInput.value

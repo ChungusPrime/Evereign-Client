@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack --config webpack.config.js --mode=development --watch",
     "prod": "webpack --config webpack.config.js --mode=production",
+    "build-standalone": "electron-builder",
     "build": "npm run prod && electron-builder"
   },
   "author": "Nathan Leadbitter",

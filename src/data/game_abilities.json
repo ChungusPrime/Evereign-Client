@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Sweep",
+        "description": "Make a single weapon attack against 3 enemies in a small radius around you",
+        "unlock_requirement": "{\"type\":\"skill\",\"id\":22,\"value\":20}",
+        "use_requirements": "[{\"type\":\"item_property\",\"value\":30},{\"type\":\"item_property\",\"value\":9}]",
+        "targeting": "aoe",
+        "cast_time": "instant",
+        "cooldown": "15",
+        "max_targets": "3",
+        "on_target": "{\"type\":\"weapon_attack\",\"id\":1,\"value\":1}"
+    },
+    {
+        "id": 2,
+        "name": "Sunder",
+        "description": "Your next melee attack ignores targets physical resistance",
+        "unlock_requirement": "{\"type\":\"class\",\"id\":1,\"value\":1}",
+        "use_requirements": "[{\"type\":\"item_property\",\"value\":30}]",
+        "targeting": "single_target_self",
+        "cast_time": "instant",
+        "cooldown": "15",
+        "max_targets": "1",
+        "on_target": "{\"type\":\"apply_effect\",\"id\":\"\",\"value\":\"\"}"
+    }
+]

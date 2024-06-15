@@ -49,6 +49,7 @@ export default class Preload extends Phaser.Scene {
     this.load.spritesheet("weapons", Assets.Weapons, { frameWidth: 32, frameHeight: 32 });
 
     // Tilemaps
+    this.load.tilemapTiledJSON("Emberlight-Island", Assets.EmberlightIsland);
     this.load.tilemapTiledJSON("D1", Assets.D1);
 
     // Minimaps

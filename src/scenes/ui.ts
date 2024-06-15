@@ -1,4 +1,3 @@
-import SmallButton from "../game_objects/small_button";
 import Tooltip from "../game_objects/tooltip";
 import Game from "./game";
 
@@ -15,15 +14,6 @@ export default class UI extends Phaser.Scene {
   XpBar: Phaser.GameObjects.Image;
   AttackBar: Phaser.GameObjects.Image;
 
-  // Buttons
-  character_button: SmallButton;
-  inventory_button: SmallButton;
-  skills_button: SmallButton;
-  abilities_button: SmallButton;
-  factions_button: SmallButton;
-  quests_button: SmallButton;
-  social_button: SmallButton;
-
   // Minimap
   MinimapCamera: Phaser.Cameras.Scene2D.Camera;
   minimap: Phaser.GameObjects.Image;
@@ -37,7 +27,7 @@ export default class UI extends Phaser.Scene {
   constructor () {
     super("UI");
   }
-
+  
   create ( scene: Game ) {
 
     this.GameScene = scene;
@@ -102,15 +92,6 @@ export default class UI extends Phaser.Scene {
     this.cameras.main.ignore([this.minimap, this.ChatContent]);
     this.ChatCamera.ignore([this.position_text, this.HealthBar, this.ResourceBar, this.XpBar, this.AttackBar, this.tooltip, this.ChatBackground]);
     this.MinimapCamera.ignore([this.position_text, this.HealthBar, this.ResourceBar, this.XpBar, this.AttackBar, this.tooltip, this.ChatBackground]);
-
-    // UI Buttons
-    this.character_button = new SmallButton(this, this.scale.width * 0.98, this.scale.height * 0.60, null, null, "character-icon", this.ToggleMenu.bind(this, "Character") );
-    this.inventory_button = new SmallButton(this, this.scale.width * 0.98, this.scale.height * 0.66, null, null, "inventory-icon", this.ToggleMenu.bind(this, "Inventory") );
-    this.skills_button = new SmallButton(this, this.scale.width * 0.98, this.scale.height * 0.72, null, null, "skills-icon", this.ToggleMenu.bind(this, "Skills") );
-    this.abilities_button = new SmallButton(this, this.scale.width * 0.98, this.scale.height * 0.78, null, null, "abilities-icon", this.ToggleMenu.bind(this, "Abilities") );
-    this.factions_button = new SmallButton(this, this.scale.width * 0.98, this.scale.height * 0.84, null, null, "factions-icon", this.ToggleMenu.bind(this, "Factions") );
-    this.quests_button = new SmallButton(this, this.scale.width * 0.98, this.scale.height * 0.90, null, null, "quests-icon", this.ToggleMenu.bind(this, "Quests") );
-    this.social_button = new SmallButton(this, this.scale.width * 0.98, this.scale.height * 0.96, null, null, "social-icon", this.ToggleMenu.bind(this, "Social") );
   }
 
   update () {

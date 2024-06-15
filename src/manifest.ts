@@ -209,6 +209,7 @@ export const RogueAdventure_tree03_s_01_animation: string = require("./images/tr
 
 // Tilemaps
 export const D1: string = require("./maps/D1.json");
+export const EmberlightIsland: string = require("./maps/emberlight_island.json");
 
 // Minimaps
 export const D1Minimap: string = require("./maps/D1.png");

@@ -32,14 +32,14 @@ export default class Panel extends Phaser.GameObjects.Container {
 
     // Panel Header
     // 10% of the total height
-    this.HeaderBackground = this.scene.add.rectangle(x, y, width, height * 0.1, 0x000000, 0.75).setStrokeStyle(2, 0xffffff, 1).setOrigin(0);
+    this.HeaderBackground = this.scene.add.rectangle(x, y, width, height * 0.1, 0x000000, 0).setStrokeStyle(2, 0xffffff, 0).setOrigin(0);
     this.HeaderText = this.scene.add.text(this.HeaderBackground.getTopCenter().x, this.HeaderBackground.getTopCenter().y + 24, title, { fontSize: "2vh", align: "center", fontFamily: "Mooli" }).setOrigin(0.5, 0);
     Phaser.Display.Align.In.Center(this.HeaderText, this.HeaderBackground);
 
     // Main Content Background
     // 90% of the total height
-    this.ContentBackground = this.scene.add.rectangle(this.HeaderBackground.getBottomLeft().x, this.HeaderBackground.getBottomCenter().y, width, height * 0.9, 0x000000, 0.75);
-    this.ContentBackground.setStrokeStyle(2, 0xffffff, 1);
+    this.ContentBackground = this.scene.add.rectangle(this.HeaderBackground.getBottomLeft().x, this.HeaderBackground.getBottomCenter().y, width, height * 0.9, 0x000000, 0);
+    this.ContentBackground.setStrokeStyle(2, 0xffffff, 0);
     this.ContentBackground.setOrigin(0);
     this.ContentBackground.setInteractive()
     .on("wheel", ( pointer: Phaser.Input.Pointer ) => {

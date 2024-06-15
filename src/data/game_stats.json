@@ -1,0 +1,134 @@
+[
+    {
+        "id": 7,
+        "name": "Critical Hit Chance",
+        "description": "How likely weapon attacks are to cause critical damage",
+        "attribute": "Agility"
+    },
+    {
+        "id": 8,
+        "name": "Critical Damage Modifier",
+        "description": "A damage multiplier applied to critical hits",
+        "attribute": "Strength"
+    },
+    {
+        "id": 9,
+        "name": "Movement Speed",
+        "description": "How fast a character moves",
+        "attribute": "Agility"
+    },
+    {
+        "id": 10,
+        "name": "Melee Accuracy",
+        "description": "Chance for melee weapon attacks to hit the target",
+        "attribute": "Agility"
+    },
+    {
+        "id": 11,
+        "name": "Carry Weight",
+        "description": "How much weight a character can carry",
+        "attribute": "Strength"
+    },
+    {
+        "id": 12,
+        "name": "Healing Modifier",
+        "description": "Efficiency of healing effects",
+        "attribute": "Wisdom"
+    },
+    {
+        "id": 13,
+        "name": "Block Chance",
+        "description": "Chance to block an attack",
+        "attribute": "Endurance"
+    },
+    {
+        "id": 14,
+        "name": "Parry Chance",
+        "description": "Chance to parry an attack",
+        "attribute": "Endurance"
+    },
+    {
+        "id": 15,
+        "name": "Dodge Chance",
+        "description": "Chance to dodge an attack",
+        "attribute": "Endurance"
+    },
+    {
+        "id": 16,
+        "name": "Attunement",
+        "description": "Derived from intelligence. Determines how in tune with the elements a character is. A higher attunement stat, allows the character to learn more spells.",
+        "attribute": "Intelligence"
+    },
+    {
+        "id": 17,
+        "name": "Slashing Resistance",
+        "description": "Ability to resist Slashing damage",
+        "attribute": "Endurance"
+    },
+    {
+        "id": 18,
+        "name": "Bludgeoning Resistance",
+        "description": "Ability to resist Bludgeoning damage",
+        "attribute": "Endurance"
+    },
+    {
+        "id": 19,
+        "name": "Piercing Resistance",
+        "description": "Ability to resist Piercing damage",
+        "attribute": "Endurance"
+    },
+    {
+        "id": 20,
+        "name": "Reputation",
+        "description": "Abstraction of how famous the character is",
+        "attribute": "Personality"
+    },
+    {
+        "id": 21,
+        "name": "Poise",
+        "description": "Resist physical attacks",
+        "attribute": "Strength"
+    },
+    {
+        "id": 22,
+        "name": "Hireling Count",
+        "description": "How many Hirelings a character can have active at once",
+        "attribute": "Personality"
+    },
+    {
+        "id": 23,
+        "name": "Fortitude",
+        "description": "Resist magic attacks",
+        "attribute": "Willpower"
+    },
+    {
+        "id": 24,
+        "name": "Reflex",
+        "description": "Defensive skill modifier (Dodge, parry, block)",
+        "attribute": "Agility"
+    },
+    {
+        "id": 25,
+        "name": "Encumberance",
+        "description": "How the character is affected by the current amount of carried weight",
+        "attribute": "Strength"
+    },
+    {
+        "id": 26,
+        "name": "Magic Adjustment",
+        "description": "Determines potency of spells",
+        "attribute": "Wisdom"
+    },
+    {
+        "id": 27,
+        "name": "Magic Accuracy",
+        "description": "Determines chance of spells being cast successfully",
+        "attribute": "Intelligence"
+    },
+    {
+        "id": 28,
+        "name": "Ranged Accuracy",
+        "description": "Determines hit chance of ranged attacks",
+        "attribute": "Agility"
+    }
+]

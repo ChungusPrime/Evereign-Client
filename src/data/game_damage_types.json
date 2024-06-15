@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "Cut",
+        "colour": "#ffabab"
+    },
+    {
+        "id": 2,
+        "name": "Blunt",
+        "colour": "#fafafa"
+    },
+    {
+        "id": 3,
+        "name": "Stab",
+        "colour": "#c9afb0"
+    },
+    {
+        "id": 4,
+        "name": "Force",
+        "colour": "#203878"
+    },
+    {
+        "id": 5,
+        "name": "Bleed",
+        "colour": "#751b10"
+    },
+    {
+        "id": 6,
+        "name": "Radiant",
+        "colour": "#ffdf87"
+    },
+    {
+        "id": 7,
+        "name": "Fire",
+        "colour": "#9c421c"
+    },
+    {
+        "id": 8,
+        "name": "Cold",
+        "colour": "#5098b3"
+    },
+    {
+        "id": 9,
+        "name": "Poison",
+        "colour": "#1c5c1c"
+    },
+    {
+        "id": 10,
+        "name": "Psychic",
+        "colour": "#3e2366"
+    },
+    {
+        "id": 11,
+        "name": "Lightning",
+        "colour": "#ffc421"
+    },
+    {
+        "id": 12,
+        "name": "Corruption",
+        "colour": "#455e2b"
+    }
+]

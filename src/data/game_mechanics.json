@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "name": "Movement",
+        "description": null
+    },
+    {
+        "id": 2,
+        "name": "Combat",
+        "description": null
+    },
+    {
+        "id": 3,
+        "name": "Magic",
+        "description": "The use of magic a normal, every day reality in the world. For a character to use magic, they must be attuned to the elements. Attunement is a character stat that determines how capable the character is of using magic. Attunement is derived from the Intelligence attribute, but may also be increased through the use of enchanted items such as spell books or runes. Every spell requires a certain amount of attunement points, stronger spells require more, where as weaker spells require less."
+    },
+    {
+        "id": 4,
+        "name": "Crafting",
+        "description": null
+    },
+    {
+        "id": 5,
+        "name": "Guilds",
+        "description": "Guilds are small factions that usually provide a particular service. You can join these guilds, and do work for them in return for pay. Or you can pay the guilds to do work for you."
+    },
+    {
+        "id": 6,
+        "name": "Land Ownership",
+        "description": "Certain parts of the game world are for sale. These can vary from small plots of empty land, to homes, shops, farms or even forts. Players that own empty land can build any structure they wish, so long as it fits within the area. Other players can work in certain structures for gold, which can be done offline. For example, a player may start working on farm land owned by another player, and can receive money or goods per hour of work done."
+    },
+    {
+        "id": 7,
+        "name": "Thievery & Crimes",
+        "description": "Players can steal items from shops or pickpocket items from NPC characters. These crimes may be reported to a local guard, who will log then incident. Players who are part of guard factions can see the list of incidents, where and when they occured and help stop them from occuring again."
+    },
+    {
+        "id": 8,
+        "name": "Group Quests",
+        "description": "Group quests are self contained areas that are too difficult for solo player. Usually involve a party of at least 5 adventurers."
+    },
+    {
+        "id": 9,
+        "name": "Hirelings",
+        "description": "Hirelings are NPC characters that can be hired to adventure along side you. All characters can have one hireling at a time by default. Some Classes can increase that limit. Also, the personality skills can increase it"
+    },
+    {
+        "id": 10,
+        "name": "Factions",
+        "description": "Major factions represent the larger political powers in the world, and are not directly joinable. Minor Factions represent smaller groups of characters that share a common goal or mindset, and are joinable. Often a several smaller factions are part of a major faction. Each faction can have its own rivals and alliances, or may be completely neutral. "
+    },
+    {
+        "id": 11,
+        "name": "Inventory",
+        "description": null
+    },
+    {
+        "id": 12,
+        "name": "Skills",
+        "description": "Skills comes in two different categories, Combat and trade skills. Combat skills are increased by using a particular type of weapon or magic style. For example, using Swords to kill enemies will increase a characters Sword skill. Using spells that deal Lightning damage, will increase a characters Lightning Magic skill. \rUpon reaching certain thresholds in skills, new abilities may be unlocked. 0: Training - 100: Proficient - 250: Expert - 500: Master"
+    },
+    {
+        "id": 13,
+        "name": "Abilities",
+        "description": "Abilities are special actions that a character can learn. The player must activate abilities when they want to use them. Some abilities are used on the character, some are used on enemies or allies, some require targeting, some require some preperation time, or have a limited range. Some abilities are unique to classes, and will require a character of a certain class and level to unlock, other abilities are unlocked by progressing in a particular combat skill."
+    },
+    {
+        "id": 14,
+        "name": "Attributes",
+        "description": null
+    },
+    {
+        "id": 15,
+        "name": "Travel",
+        "description": null
+    },
+    {
+        "id": 16,
+        "name": "Jobs",
+        "description": null
+    },
+    {
+        "id": 17,
+        "name": "Item Properties",
+        "description": "Some abilities require armour or weapons to have certain properties. Two-Handed: Must be wielded in two hands"
+    },
+    {
+        "id": 18,
+        "name": "Traits",
+        "description": "Traits are passive buffs that are always active on characters. Many items and abilities require a trait before they can be used, for example, to use a Mace, the character must have the Mace Training Trait"
+    }
+]

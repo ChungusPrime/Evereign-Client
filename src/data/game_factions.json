@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "The Crownhaven Kingdom",
+        "description": null,
+        "type": "major",
+        "joinable": "no"
+    },
+    {
+        "id": 2,
+        "name": "The Twilight Accord",
+        "description": null,
+        "type": "major",
+        "joinable": "no"
+    },
+    {
+        "id": 3,
+        "name": "Hellkite Gang",
+        "description": null,
+        "type": "minor",
+        "joinable": "yes"
+    },
+    {
+        "id": 4,
+        "name": "Bounty Hunter Guild",
+        "description": null,
+        "type": "minor",
+        "joinable": "yes"
+    },
+    {
+        "id": 5,
+        "name": "Kingdom Peacekeepers",
+        "description": null,
+        "type": "minor",
+        "joinable": "yes"
+    },
+    {
+        "id": 6,
+        "name": "Accord Enforcers",
+        "description": null,
+        "type": "minor",
+        "joinable": "yes"
+    }
+]

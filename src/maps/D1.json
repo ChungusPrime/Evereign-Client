@@ -4535,7 +4535,7 @@
         {
          "columns":32,
          "firstgid":20687,
-         "image":"..\/..\/..\/..\/..\/Users\/natha\/Desktop\/Village - Rogue Adventure\/Village - Rogue Adventure\/16x16\/RA_Village.png",
+         "image":"..\/..\/..\/..\/EvereignMaps\/spritesheets\/unzipped\/RA_Village.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -4548,7 +4548,7 @@
         {
          "columns":16,
          "firstgid":21711,
-         "image":"..\/..\/..\/..\/..\/Users\/natha\/Desktop\/Jungle - Rogue Adventure\/Jungle - Rogue Adventure\/16x16\/RA_Jungle_Extras.png",
+         "image":"..\/..\/..\/..\/EvereignMaps\/spritesheets\/unzipped\/RA_Jungle_Extras.png",
          "imageheight":256,
          "imagewidth":256,
          "margin":0,
@@ -4561,7 +4561,7 @@
         {
          "columns":32,
          "firstgid":21967,
-         "image":"..\/..\/..\/..\/..\/Users\/natha\/Desktop\/Jungle - Rogue Adventure\/Jungle - Rogue Adventure\/16x16\/RA_Jungle.png",
+         "image":"..\/..\/..\/..\/EvereignMaps\/spritesheets\/unzipped\/RA_Jungle.png",
          "imageheight":752,
          "imagewidth":512,
          "margin":0,
@@ -4574,7 +4574,7 @@
         {
          "columns":25,
          "firstgid":23471,
-         "image":"..\/..\/..\/..\/..\/Users\/natha\/Desktop\/Jungle - Rogue Adventure\/Jungle - Rogue Adventure\/16x16\/RA_Ground_Tiles.png",
+         "image":"..\/..\/..\/..\/EvereignMaps\/spritesheets\/unzipped\/RA_Ground_Tiles.png",
          "imageheight":272,
          "imagewidth":400,
          "margin":0,
@@ -4587,7 +4587,7 @@
         {
          "columns":16,
          "firstgid":23896,
-         "image":"..\/..\/..\/..\/..\/Users\/natha\/Desktop\/Rogue Adventure World\/Rogue Adventure World\/Tilesets (16x16)\/RA_Wasteland_Water.png",
+         "image":"..\/..\/..\/..\/EvereignMaps\/spritesheets\/unzipped\/RA_Wasteland_Water.png",
          "imageheight":320,
          "imagewidth":256,
          "margin":0,
@@ -4600,7 +4600,7 @@
         {
          "columns":48,
          "firstgid":24216,
-         "image":"..\/..\/..\/..\/..\/Users\/natha\/Desktop\/Rogue Adventure World\/Rogue Adventure World\/Tilesets (16x16)\/RA_Interior.png",
+         "image":"..\/..\/..\/..\/EvereignMaps\/spritesheets\/unzipped\/RA_Interior.png",
          "imageheight":512,
          "imagewidth":768,
          "margin":0,
@@ -4613,7 +4613,7 @@
         {
          "columns":48,
          "firstgid":25752,
-         "image":"..\/..\/..\/..\/..\/Users\/natha\/Desktop\/Rogue Adventure World\/Rogue Adventure World\/Tilesets (16x16)\/RA_Graveyard.png",
+         "image":"..\/..\/..\/..\/EvereignMaps\/spritesheets\/unzipped\/RA_Graveyard.png",
          "imageheight":256,
          "imagewidth":768,
          "margin":0,
@@ -4626,7 +4626,7 @@
         {
          "columns":4,
          "firstgid":26520,
-         "image":"..\/..\/..\/..\/..\/Users\/natha\/Desktop\/Rogue Adventure World\/Rogue Adventure World\/Tilesets (16x16)\/tree03_s_01_animation.png",
+         "image":"..\/..\/..\/..\/EvereignMaps\/spritesheets\/unzipped\/tree03_s_01_animation.png",
          "imageheight":240,
          "imagewidth":256,
          "margin":0,
